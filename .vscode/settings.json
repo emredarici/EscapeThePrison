@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "dot4proje.sln"
+    "dotnet.defaultSolution": "dotproje-4.sln"
 }
