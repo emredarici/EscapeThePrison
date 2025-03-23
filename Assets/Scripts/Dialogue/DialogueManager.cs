@@ -10,19 +10,20 @@ public class DialogueManager : MonoBehaviour
     public Text messageText;
     public RectTransform backgroundBox;
 
-    Message[] cureentMessages;
+    List<Message> cureentMessages;
     Actor[] currentActors;
     int activeMessage = 0;
     public static bool isActive = false;
 
     public void OpenDialogue(Message[] messages, Actor[] actors)
     {
-        cureentMessages = messages;
+        cureentMessages = new List<Message>(messages);
         currentActors = actors;
         activeMessage = 0;
         isActive = true;
 
         Debug.Log("Started conversation! Loaded messages: " + messages.Length);
+        SplitLongMessages();
         DisplayMessage();
         backgroundBox.LeanScale(Vector3.one, 0.5f);
     }
@@ -42,7 +43,7 @@ public class DialogueManager : MonoBehaviour
     void NextMessage()
     {
         activeMessage++;
-        if (activeMessage < cureentMessages.Length)
+        if (activeMessage < cureentMessages.Count)
         {
             DisplayMessage();
         }
@@ -51,6 +52,24 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("End of conversation!");
             backgroundBox.LeanScale(Vector3.zero, 0.5f).setEaseInOutExpo();
             isActive = false;
+        }
+    }
+
+    void SplitLongMessages()
+    {
+        for (int i = 0; i < cureentMessages.Count; i++)
+        {
+            while (cureentMessages[i].message.Length > 370)
+            {
+                string longMessage = cureentMessages[i].message;
+                string firstPart = longMessage.Substring(0, 370);
+                string secondPart = longMessage.Substring(370, longMessage.Length - 370);
+
+                cureentMessages[i].message = firstPart;
+                Message newMessage = new Message { message = secondPart, actorId = cureentMessages[i].actorId };
+                cureentMessages.Insert(i + 1, newMessage);
+                i++;
+            }
         }
     }
 

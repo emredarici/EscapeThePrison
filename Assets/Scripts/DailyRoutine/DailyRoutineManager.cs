@@ -1,19 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DailyRoutineManager : MonoBehaviour
 {
-    DailyRoutineBaseState currentState;
+    public static DailyRoutineManager Instance { get; private set; }
+    public DailyRoutineBaseState currentState;
     HeadcountState headcountState = new HeadcountState();
     ChowtimeState chowtimeState = new ChowtimeState();
     RectimeState rectimeState = new RectimeState();
-    BedtimeState bedtimeState = new BedtimeState();
+    public BedtimeState bedtimeState = new BedtimeState();
 
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         currentState = headcountState;
-        currentState.EnterStatate(this);
+        currentState.EnterState(this);
     }
 
     void Update()
@@ -24,6 +35,7 @@ public class DailyRoutineManager : MonoBehaviour
     public void SwitchState(DailyRoutineBaseState newState)
     {
         currentState = newState;
-        currentState.EnterStatate(this);
+        currentState.EnterState(this);
+        Debug.Log("Switched to " + currentState);
     }
 }
