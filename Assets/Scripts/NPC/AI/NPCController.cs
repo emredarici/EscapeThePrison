@@ -8,14 +8,11 @@ public class NPCController : MonoBehaviour
     private NavMeshAgent agent;
     private NPCState currentState;
 
-    public bool HasSlept { get; set; }
-    public bool HasLookedOutside { get; set; }
-    public bool HasUsedToilet { get; set; }
+    public bool hasRandomStateSet = false;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        SetState(new NPCState.IdleState(this));
     }
 
     public void SetState(NPCState newState)
@@ -28,7 +25,17 @@ public class NPCController : MonoBehaviour
     {
         if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
         {
+            if (!hasRandomStateSet)
+            {
+                NPCState[] states = { new SleepingState(this), new LookingOutsideState(this), new ToiletState(this) };
+                SetState(states[Random.Range(0, states.Length)]);
+                hasRandomStateSet = true;
+            }
             currentState?.Update();
+        }
+        else
+        {
+            hasRandomStateSet = false;
         }
     }
 
@@ -49,18 +56,5 @@ public class NPCController : MonoBehaviour
             yield return null;
         }
         onArrived?.Invoke();
-    }
-
-
-    public bool HasWaited(float time)
-    {
-        return Time.time - currentState.StartTime >= time;
-    }
-
-    public void BedTimeDailyRoutine()
-    {
-        HasSlept = false;
-        HasLookedOutside = false;
-        HasUsedToilet = false;
     }
 }

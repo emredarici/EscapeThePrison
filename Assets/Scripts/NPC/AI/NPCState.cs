@@ -17,121 +17,100 @@ public abstract class NPCState
 
     public virtual void Update() { }
 
-    public bool HasWaited(float time)
+    public void RandomState(int a, int b)
     {
-        return Time.time - StartTime >= time;
-    }
-
-    // 🔹 IDLE STATE
-    public class IdleState : NPCState
-    {
-        private float waitTime;
-
-        public IdleState(NPCController npc) : base(npc) { }
-
-        public override void Enter()
+        int random = Random.Range(a, b);
+        switch (random)
         {
-            base.Enter();
-            waitTime = Random.Range(2f, 5f);
-        }
-
-        public override void Update()
-        {
-            waitTime -= Time.deltaTime;
-            if (waitTime <= 0)
-            {
-                if (!npc.HasSlept)
-                {
-                    npc.SetState(new SleepingState(npc));
-                }
-                else if (!npc.HasLookedOutside)
-                {
-                    npc.SetState(new LookingOutsideState(npc));
-                }
-                else if (!npc.HasUsedToilet)
-                {
-                    npc.SetState(new ToiletState(npc));
-                }
-                else
-                {
-                    npc.BedTimeDailyRoutine();
-                }
-            }
+            case 0:
+                npc.SetState(new SleepingState(npc));
+                break;
+            case 1:
+                npc.SetState(new LookingOutsideState(npc));
+                break;
+            case 2:
+                npc.SetState(new ToiletState(npc));
+                break;
         }
     }
 
-    public class SleepingState : NPCState
+    public bool HasWaited(int minTime, int maxTime)
     {
-        private Transform target;
+        int randomTime = Random.Range(minTime, maxTime);
+        return Time.time - StartTime >= randomTime;
+    }
+}
 
-        public SleepingState(NPCController npc) : base(npc)
-        {
-            target = npc.GetBedPosition();
-        }
 
-        public override void Enter()
-        {
-            base.Enter();
-            npc.MoveTo(target.position, () => Debug.Log("Sleeping"));
-        }
+public class SleepingState : NPCState
+{
+    private Transform target;
 
-        public override void Update()
-        {
-            if (HasWaited(10f))
-            {
-                npc.HasSlept = true;
-                npc.SetState(new IdleState(npc));
-            }
-        }
+    public SleepingState(NPCController npc) : base(npc)
+    {
+        target = npc.GetBedPosition();
     }
 
-    public class LookingOutsideState : NPCState
+    public override void Enter()
     {
-        private Transform target;
-
-        public LookingOutsideState(NPCController npc) : base(npc)
-        {
-            target = npc.GetBarsPosition();
-        }
-
-        public override void Enter()
-        {
-            base.Enter();
-            npc.MoveTo(target.position, () => Debug.Log("LookOutside"));
-        }
-
-        public override void Update()
-        {
-            if (HasWaited(5f))
-            {
-                npc.HasLookedOutside = true;
-                npc.SetState(new IdleState(npc));
-            }
-        }
+        base.Enter();
+        npc.MoveTo(target.position, () => Debug.Log("Sleeping"));
     }
 
-    public class ToiletState : NPCState
+    public override void Update()
     {
-        private Transform target;
-
-        public ToiletState(NPCController npc) : base(npc)
+        if (HasWaited(5, 10))
         {
-            target = npc.GetToiletPosition();
-        }
-
-        public override void Enter()
-        {
-            base.Enter();
-            npc.MoveTo(target.position, () => Debug.Log("Sit"));
-        }
-
-        public override void Update()
-        {
-            if (HasWaited(7f))
-            {
-                npc.HasUsedToilet = true;
-                npc.SetState(new IdleState(npc));
-            }
+            RandomState(0, 3);
         }
     }
 }
+
+public class LookingOutsideState : NPCState
+{
+    private Transform target;
+
+    public LookingOutsideState(NPCController npc) : base(npc)
+    {
+        target = npc.GetBarsPosition();
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        npc.MoveTo(target.position, () => Debug.Log("LookOutside"));
+    }
+
+    public override void Update()
+    {
+        if (HasWaited(5, 7))
+        {
+            RandomState(0, 3);
+        }
+    }
+}
+
+public class ToiletState : NPCState
+{
+    private Transform target;
+
+    public ToiletState(NPCController npc) : base(npc)
+    {
+        target = npc.GetToiletPosition();
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        npc.MoveTo(target.position, () => Debug.Log("Sit"));
+    }
+
+    public override void Update()
+    {
+        if (HasWaited(7, 10))
+        {
+            RandomState(0, 3);
+        }
+    }
+}
+
