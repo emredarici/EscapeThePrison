@@ -11,7 +11,7 @@ public class HeadcountState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
-
+        dailyRoutineManager.NpcHeadCount();
     }
 
     public override void UpdateState(DailyRoutineManager dailyRoutineManager)
@@ -24,6 +24,9 @@ public class HeadcountState : DailyRoutineBaseState
 
     public override void ExitState(DailyRoutineManager dailyRoutineManager)
     {
+        Debug.Log("Exiting Headcount State");
+        UIManager.Instance.ChangeText(UIManager.Instance.informationText, null);
+        VFXManager.Instance.DestroyMarker();
     }
 }
 
@@ -31,6 +34,7 @@ public class ChowtimeState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
+        dailyRoutineManager.ArrangeQueue();
 
     }
 
@@ -70,7 +74,10 @@ public class BedtimeState : DailyRoutineBaseState
 
     public override void UpdateState(DailyRoutineManager dailyRoutineManager)
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            dailyRoutineManager.SwitchState(dailyRoutineManager.chowtimeState);
+        }
     }
 
     public override void ExitState(DailyRoutineManager dailyRoutineManager)

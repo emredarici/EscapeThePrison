@@ -36,6 +36,7 @@ public class NPCController : MonoBehaviour
         else
         {
             hasRandomStateSet = false;
+            SetState(new IdleState(this));
         }
     }
 
