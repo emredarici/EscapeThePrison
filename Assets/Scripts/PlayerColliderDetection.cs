@@ -8,7 +8,7 @@ public class PlayerColliderDetection : MonoBehaviour
     {
         if (other.CompareTag("LocationMarkerVFX"))
         {
-            Debug.Log("Player entered the location marker trigger zone.");
+            DebugToolKit.Log("Player entered the location marker trigger zone.");
             if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.headcountState)
             {
                 DailyRoutineManager.Instance.PlayerHeadCount();

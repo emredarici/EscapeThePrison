@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
         activeMessage = 0;
         isActive = true;
 
-        Debug.Log("Started conversation! Loaded messages: " + messages.Length);
+        DebugToolKit.Log("Started conversation! Loaded messages: " + messages.Length);
         SplitLongMessages();
         DisplayMessage();
         backgroundBox.LeanScale(Vector3.one, 0.5f);
@@ -49,7 +49,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("End of conversation!");
+            DebugToolKit.Log("End of conversation!");
             backgroundBox.LeanScale(Vector3.zero, 0.5f).setEaseInOutExpo();
             isActive = false;
         }

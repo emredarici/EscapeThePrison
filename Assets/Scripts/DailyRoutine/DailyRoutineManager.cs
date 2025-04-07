@@ -35,7 +35,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         currentState.ExitState(this);
         currentState = newState;
         currentState.EnterState(this);
-        Debug.Log("Switched to " + currentState);
+        DebugToolKit.Log("Switched to " + currentState);
     }
     public void ArrangeQueue()
     {
@@ -55,23 +55,23 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
         while (elapsedTime < waitTime)
         {
-            Debug.Log("Yemek hazırlanıyor...");
+            DebugToolKit.Log("Yemek hazırlanıyor...");
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        Debug.Log("Yemek hazır! NPC'ler sırayla hareket ediyor.");
+        DebugToolKit.Log("Yemek hazır! NPC'ler sırayla hareket ediyor.");
         StartCoroutine(MoveQueue());
     }
 
     private IEnumerator MoveQueue()
     {
-        Debug.Log("MoveQueue started.");
+        DebugToolKit.Log("MoveQueue started.");
         while (npcs.Count > 0)
         {
             if (!isMoving)
             {
-                Debug.Log("Moving NPCs to grab food position.");
+                DebugToolKit.Log("Moving NPCs to grab food position.");
                 isMoving = true;
 
                 NavMeshAgent firstNpc = npcs[0];
@@ -81,7 +81,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
                     Transform currentExitPosition = exitPosition[0];
                     firstNpc.SetDestination(currentExitPosition.position);
 
-                    Debug.Log("NPC reached exit position.");
+                    DebugToolKit.Log("NPC reached exit position.");
 
                     npcs.RemoveAt(0);
                     exitPosition.RemoveAt(0);
@@ -100,7 +100,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
             yield return null;
         }
 
-        Debug.Log("MoveQueue completed.");
+        DebugToolKit.Log("MoveQueue completed.");
 
     }
 
@@ -126,7 +126,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     {
         yield return new WaitForSeconds(5f);
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, $"Attendance confirmed. Headcount: {npcs.Count + 1}.");
-        Debug.Log("Player headcount confirmed.");
+        DebugToolKit.Log("Player headcount confirmed.");
         yield return new WaitForSeconds(3f);
         SwitchState(bedtimeState);
     }

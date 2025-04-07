@@ -11,13 +11,13 @@ public class VFXManager : Singleton<VFXManager>
     public void SpawnLocationMarker(Vector3 position)
     {
         marker = Instantiate(locationMarkerPrefab, position, Quaternion.identity);
-        Debug.Log($"Character instantiated at position: {position}");
+        DebugToolKit.Log($"Character instantiated at position: {position}");
     }
 
     public void DestroyMarker()
     {
         Destroy(marker, 0f);
-        Debug.Log(marker + " destroyed.");
+        DebugToolKit.Log(marker + " destroyed.");
     }
 
 }

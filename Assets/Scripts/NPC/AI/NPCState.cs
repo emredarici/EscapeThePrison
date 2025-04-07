@@ -67,7 +67,7 @@ public class SleepingState : NPCState
     public override void Enter()
     {
         base.Enter();
-        npc.MoveTo(target.position, () => Debug.Log("Sleeping"));
+        npc.MoveTo(target.position, () => DebugToolKit.Log("Sleeping"));
     }
 
     public override void Update()
@@ -91,7 +91,7 @@ public class LookingOutsideState : NPCState
     public override void Enter()
     {
         base.Enter();
-        npc.MoveTo(target.position, () => Debug.Log("LookOutside"));
+        npc.MoveTo(target.position, () => DebugToolKit.Log("LookOutside"));
     }
 
     public override void Update()
@@ -115,7 +115,7 @@ public class ToiletState : NPCState
     public override void Enter()
     {
         base.Enter();
-        npc.MoveTo(target.position, () => Debug.Log("Sit"));
+        npc.MoveTo(target.position, () => DebugToolKit.Log("Sit"));
     }
 
     public override void Update()
