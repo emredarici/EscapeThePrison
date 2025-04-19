@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - LocationMarkerVFX
+  - DialogueTriggerNpc
+  - Door
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interactive
   - Water
   - UI
   - 

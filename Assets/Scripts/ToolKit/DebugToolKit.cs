@@ -28,4 +28,10 @@ public static class DebugToolKit
         if (!IsDebugModeEnabled) return;
         Debug.LogError("[ERROR]" + message);
     }
+
+    public static void DrawRay(Vector3 origin, Vector3 direction, float distance, Color color)
+    {
+        if (!IsDebugModeEnabled) return;
+        Debug.DrawRay(origin, direction * distance, color);
+    }
 }

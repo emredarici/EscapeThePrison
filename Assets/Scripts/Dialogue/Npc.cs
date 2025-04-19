@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class Npc : MonoBehaviour
@@ -9,13 +8,14 @@ public class Npc : MonoBehaviour
 
     void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1f) && MessageSend == false)
+        if (PlayerRaycastHandler.Instance.HasHit)
         {
-            if (hit.collider.CompareTag("Player"))
+            RaycastHit hit = PlayerRaycastHandler.Instance.CurrentHit;
+
+            if (hit.collider.CompareTag("DialogueTriggerNpc") && !MessageSend)
             {
-                dialogueTrigger.StartDialogue();
                 MessageSend = true;
+                dialogueTrigger.StartDialogue();
             }
         }
     }

@@ -25,7 +25,7 @@ public class HeadcountState : DailyRoutineBaseState
     public override void ExitState(DailyRoutineManager dailyRoutineManager)
     {
         DebugToolKit.Log("Exiting Headcount State");
-        UIManager.Instance.ChangeText(UIManager.Instance.informationText, null);
+        UIManager.Instance.ChangeText(UIManager.Instance.informationText, "");
         VFXManager.Instance.DestroyMarker();
     }
 }

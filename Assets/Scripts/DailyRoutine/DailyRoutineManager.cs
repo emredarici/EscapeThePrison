@@ -55,7 +55,6 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
         while (elapsedTime < waitTime)
         {
-            DebugToolKit.Log("Yemek hazırlanıyor...");
             elapsedTime += Time.deltaTime;
             yield return null;
         }
