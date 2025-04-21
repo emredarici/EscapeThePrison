@@ -17,7 +17,7 @@ namespace Player
         [SerializeField] private Color rayColor = Color.red;
 
         [Header("Controls")]
-        [SerializeField] private InputActionReference interactionControl;
+        [SerializeField] public InputActionReference interactionControl;
 
 
         private RaycastHit currentHit;

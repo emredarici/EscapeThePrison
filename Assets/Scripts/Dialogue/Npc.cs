@@ -8,7 +8,7 @@ public class Npc : MonoBehaviour
 
     void Update()
     {
-        if (PlayerRaycastHandler.Instance.HasHit)
+        if (PlayerRaycastHandler.Instance.HasHit && PlayerRaycastHandler.Instance.interactionControl.action.triggered)
         {
             RaycastHit hit = PlayerRaycastHandler.Instance.CurrentHit;
 
