@@ -7,18 +7,26 @@ namespace Player
     public class PlayerControls : MonoBehaviour
     {
         [SerializeField] private InputActionReference movementControl;
-        [SerializeField] private InputActionReference runControl; // Reference to Run action
-        [SerializeField] private Animator playerAnimator;
+        [SerializeField] private InputActionReference runControl;
         private CharacterController controller;
         private Transform cameraMainTransform;
 
         [SerializeField] private float playerSpeed = 5.0f;
-        [SerializeField] private float runningSpeed = 8.0f; // Running speed
+        [SerializeField] private float runningSpeed = 8.0f;
         [SerializeField] private float gravityValue = -9.81f;
         [SerializeField] private float rotationSpeed = 4f;
 
         private Vector3 playerVelocity;
         private bool groundedPlayer;
+        private bool isInputEnabled = true; // Hareket girişlerini kontrol eden bayrak
+
+        private IPlayerAnimationHandler animationHandler;
+
+        private void Awake()
+        {
+            controller = GetComponent<CharacterController>();
+            animationHandler = GetComponent<IPlayerAnimationHandler>();
+        }
 
         void OnEnable()
         {
@@ -34,15 +42,29 @@ namespace Player
 
         private void Start()
         {
-            controller = this.GetComponent<CharacterController>();
             cameraMainTransform = Camera.main.transform;
         }
 
         void Update()
         {
-            HandleMovement();
-            HandleRotation();
+            if (isInputEnabled)
+            {
+                HandleMovement();
+                HandleRotation();
+            }
             ApplyGravity();
+        }
+
+        public void DisableInput()
+        {
+            Debug.Log("Input Disabled");
+            isInputEnabled = false;
+        }
+
+        public void EnableInput()
+        {
+            Debug.Log("Input Enabled");
+            isInputEnabled = true;
         }
 
         private void HandleMovement()
@@ -56,18 +78,18 @@ namespace Player
             Vector2 movementInput = movementControl.action.ReadValue<Vector2>();
             if (movementInput != Vector2.zero)
             {
-                bool isRunning = runControl.action.ReadValue<float>() > 0; // Check if Run action is active
+                bool isRunning = runControl.action.ReadValue<float>() > 0;
                 float currentSpeed = isRunning ? runningSpeed : playerSpeed;
 
                 Vector3 moveDirection = CalculateMoveDirection(movementInput);
                 controller.Move(moveDirection * Time.deltaTime * currentSpeed);
 
-                float speedValue = isRunning ? 1.0f : 0.5f; // Set Speed for blend tree
-                playerAnimator.SetFloat("Speed", speedValue);
+                float speedValue = isRunning ? 1.0f : 0.5f;
+                animationHandler.SetMovementSpeed(speedValue);
             }
             else
             {
-                playerAnimator.SetFloat("Speed", 0.0f); // Idle
+                animationHandler.SetMovementSpeed(0.0f);
             }
         }
 
@@ -75,7 +97,7 @@ namespace Player
         {
             Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
             move = cameraMainTransform.forward * move.z + cameraMainTransform.right * move.x;
-            move.y = 0; // Ensure no vertical movement
+            move.y = 0;
             return move;
         }
 

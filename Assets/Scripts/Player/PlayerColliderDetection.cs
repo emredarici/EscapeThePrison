@@ -1,10 +1,47 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Player
 {
     public class PlayerColliderDetection : MonoBehaviour
     {
+        private ICollectible currentCollectible;
+        private IPlayerAnimationHandler animationHandler;
+        private PlayerControls playerControls;
+
+        private void Awake()
+        {
+            animationHandler = GetComponent<IPlayerAnimationHandler>();
+            playerControls = GetComponent<PlayerControls>();
+        }
+
         private void OnTriggerEnter(Collider other)
+        {
+            HandleLocationMarker(other);
+
+            if (other.TryGetComponent<ICollectible>(out var collectible))
+            {
+                currentCollectible = collectible;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent<ICollectible>(out var collectible) && collectible == currentCollectible)
+            {
+                currentCollectible = null;
+            }
+        }
+
+        private void Update()
+        {
+            if (currentCollectible != null && PlayerRaycastHandler.Instance.interactionControl.action.triggered)
+            {
+                CollectItem();
+            }
+        }
+
+        private void HandleLocationMarker(Collider other)
         {
             if (other.CompareTag("LocationMarkerVFX"))
             {
@@ -15,6 +52,18 @@ namespace Player
                 }
             }
         }
+
+        private void CollectItem()
+        {
+            playerControls.DisableInput();
+            animationHandler.PlayPickupAnimation(() =>
+            {
+                currentCollectible.Collect();
+                currentCollectible = null;
+
+                animationHandler.SetMovementSpeed(0);
+                playerControls.EnableInput();
+            });
+        }
     }
 }
-
