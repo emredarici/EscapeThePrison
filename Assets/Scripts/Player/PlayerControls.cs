@@ -9,6 +9,7 @@ namespace Player
         [SerializeField] private InputActionReference movementControl;
         [SerializeField] private InputActionReference runControl;
         private CharacterController controller;
+        private CapsuleCollider capsuleCollider;
         private Transform cameraMainTransform;
 
         [SerializeField] private float playerSpeed = 5.0f;
@@ -24,6 +25,7 @@ namespace Player
 
         private void Awake()
         {
+            capsuleCollider = GetComponent<CapsuleCollider>();
             controller = GetComponent<CharacterController>();
             animationHandler = GetComponent<IPlayerAnimationHandler>();
         }
@@ -47,6 +49,11 @@ namespace Player
 
         void Update()
         {
+            if (!controller.enabled)
+            {
+                return;
+            }
+
             if (isInputEnabled)
             {
                 HandleMovement();
@@ -65,6 +72,16 @@ namespace Player
         {
             Debug.Log("Input Enabled");
             isInputEnabled = true;
+        }
+
+        public void isTriggerTrue()
+        {
+            this.capsuleCollider.isTrigger = true;
+        }
+
+        public void isTriggerFalse()
+        {
+            this.capsuleCollider.isTrigger = false;
         }
 
         private void HandleMovement()

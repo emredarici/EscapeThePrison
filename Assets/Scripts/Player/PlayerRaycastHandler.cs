@@ -30,7 +30,7 @@ namespace Player
         protected override void Awake()
         {
             interactionControl.action.performed += ctx => OnMinigameDetection();
-
+            interactionControl.action.performed += ctx => OnSleepDetection();
         }
 
         private void FixedUpdate()
@@ -86,6 +86,15 @@ namespace Player
                 DebugToolKit.Log("Minigame Trigger detected!");
                 MinigameManager.Instance.RegisterMinigame("OpenDoor", GetComponent<OpenDoorMG>());
                 MinigameManager.Instance.StartMinigame("OpenDoor");
+            }
+        }
+
+        private void OnSleepDetection()
+        {
+            if (hasHit && currentHit.collider.CompareTag("Bed"))
+            {
+                DebugToolKit.Log("Sleep Trigger detected!");
+                PlayerAnimationHandler.Instance.SleepPlayer();
             }
         }
     }

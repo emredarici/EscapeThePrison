@@ -1,44 +1,87 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerAnimationHandler : MonoBehaviour, IPlayerAnimationHandler
+namespace Player
 {
-    private Animator animator;
-
-    private void Awake()
+    public class PlayerAnimationHandler : Singleton<PlayerAnimationHandler>, IPlayerAnimationHandler
     {
-        animator = GetComponentInChildren<Animator>();
-    }
+        private Animator animator;
+        private PlayerControls playerControls;
+        public Transform bedPosition;
+        private CharacterController characterController;
 
-    public void PlayPickupAnimation(Action onAnimationComplete)
-    {
-        animator.SetTrigger("Pickup");
-
-        float animationDuration = GetAnimationClipLength("Pickup");
-        StartCoroutine(WaitForAnimation(animationDuration, onAnimationComplete));
-    }
-
-    public void SetMovementSpeed(float speed)
-    {
-        animator.SetFloat("Speed", speed);
-    }
-
-    private float GetAnimationClipLength(string clipName)
-    {
-        foreach (var clip in animator.runtimeAnimatorController.animationClips)
+        private void Awake()
         {
-            if (clip.name == clipName)
-            {
-                return clip.length;
-            }
+            animator = GetComponentInChildren<Animator>();
+            characterController = GetComponent<CharacterController>();
+            playerControls = GetComponent<PlayerControls>();
         }
-        return 0f;
-    }
 
-    private IEnumerator WaitForAnimation(float duration, Action onAnimationComplete)
-    {
-        yield return new WaitForSeconds(duration + 2.0f);
-        onAnimationComplete?.Invoke();
+        public void PlayPickupAnimation(Action onAnimationComplete)
+        {
+            animator.SetTrigger("Pickup");
+
+            float animationDuration = GetAnimationClipLength("Pickup");
+            StartCoroutine(WaitForAnimation(animationDuration, onAnimationComplete));
+        }
+
+        public void SetMovementSpeed(float speed)
+        {
+            animator.SetFloat("Speed", speed);
+        }
+
+        public void PlaySleepAnimation(Action onAnimationComplete)
+        {
+            if (characterController != null)
+            {
+                characterController.enabled = false;
+            }
+            animator.SetBool("Sleep", true);
+            playerControls.transform.position = bedPosition.position;
+            playerControls.transform.rotation = bedPosition.rotation;
+
+
+
+
+            float animationDuration = GetAnimationClipLength("Sleep");
+            StartCoroutine(WaitForAnimation(animationDuration, onAnimationComplete));
+        }
+
+        private float GetAnimationClipLength(string clipName)
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == clipName)
+                {
+                    return clip.length;
+                }
+            }
+            return 0f;
+        }
+
+        public void SleepPlayer()
+        {
+            playerControls.DisableInput();
+            PlaySleepAnimation(() =>
+            {
+                animator.SetBool("Sleep", false);
+                SetMovementSpeed(0);
+                playerControls.EnableInput();
+
+                if (characterController != null)
+                {
+                    characterController.enabled = true;
+                }
+
+            });
+        }
+
+        private IEnumerator WaitForAnimation(float duration, Action onAnimationComplete)
+        {
+            yield return new WaitForSeconds(duration + 4.0f);
+            onAnimationComplete?.Invoke();
+        }
     }
 }

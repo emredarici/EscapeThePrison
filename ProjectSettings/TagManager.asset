@@ -7,6 +7,7 @@ TagManager:
   - LocationMarkerVFX
   - DialogueTriggerNpc
   - Door
+  - Bed
   layers:
   - Default
   - TransparentFX
