@@ -12,7 +12,7 @@ namespace Player
         public Transform bedPosition;
         private CharacterController characterController;
 
-        private void Awake()
+        protected override void Awake()
         {
             animator = GetComponentInChildren<Animator>();
             characterController = GetComponent<CharacterController>();
