@@ -19,6 +19,10 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
     [HideInInspector] public bool isMoving = false;
 
+    protected override void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         currentState = headcountState;

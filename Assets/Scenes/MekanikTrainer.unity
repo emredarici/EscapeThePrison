@@ -367,7 +367,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78281619}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16743723, y: -0.000000008481737, z: 0.0000000014404943, w: 0.98588276}
+  m_LocalRotation: {x: 0.16743723, y: 0.000000008481737, z: -0.0000000014404945, w: 0.98588276}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4764,6 +4764,37 @@ Transform:
   - {fileID: 845443695}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1747158009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1747158012}
+  m_Layer: 0
+  m_Name: DayManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1747158012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747158009}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1767875998
 GameObject:
   m_ObjectHideFlags: 0
@@ -5002,8 +5033,9 @@ GameObject:
   - component: {fileID: 1928750900}
   - component: {fileID: 1928750901}
   - component: {fileID: 1928750902}
-  - component: {fileID: 1928750903}
   - component: {fileID: 1928750904}
+  - component: {fileID: 1928750905}
+  - component: {fileID: 1928750906}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5094,18 +5126,6 @@ MonoBehaviour:
   moveDuration: 1
   score: 0
   miniGameScoreText: {fileID: 310287521}
---- !u!114 &1928750903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1928750897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00c8cd668788056478cc13376069feb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1928750904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5119,6 +5139,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigameActive: 0
+--- !u!114 &1928750905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928750897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ecb7940084b1e0448223169b565752f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDay: 0
+--- !u!114 &1928750906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928750897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31dc767da10e44e44bb364b251baa795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dayManager: {fileID: 1928750905}
+  dailyRoutineManager: {fileID: 1928750898}
 --- !u!1 &1935259309
 GameObject:
   m_ObjectHideFlags: 0
@@ -5691,3 +5738,4 @@ SceneRoots:
   - {fileID: 2141710241}
   - {fileID: 1214931762}
   - {fileID: 1731886680}
+  - {fileID: 1747158012}
