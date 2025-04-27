@@ -5,6 +5,7 @@ using TMPro;
 public class UIManager : Singleton<UIManager>
 {
     public TextMeshProUGUI informationText;
+    public GameObject movementTrailer;
 
     public void ChangeText(TextMeshProUGUI text, string message)
     {

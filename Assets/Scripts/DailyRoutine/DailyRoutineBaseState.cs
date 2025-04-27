@@ -70,17 +70,25 @@ public class BedtimeState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day1))
+        {
+            UIManager.Instance.movementTrailer.SetActive(true);
+            dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(10f, dailyRoutineManager.chowtimeState));
+        }
     }
 
     public override void UpdateState(DailyRoutineManager dailyRoutineManager)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            dailyRoutineManager.SwitchState(dailyRoutineManager.chowtimeState);
-        }
+
     }
 
     public override void ExitState(DailyRoutineManager dailyRoutineManager)
     {
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day1))
+        {
+            Object.Destroy(UIManager.Instance.movementTrailer);
+        }
     }
+
+
 }

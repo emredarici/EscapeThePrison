@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class DailyRoutineManager : Singleton<DailyRoutineManager>
 {
+    public DayManager dayManager;
     public DailyRoutineBaseState currentState;
     public HeadcountState headcountState = new HeadcountState();
     public ChowtimeState chowtimeState = new ChowtimeState();
@@ -22,10 +23,11 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     protected override void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        dayManager = FindObjectOfType<DayManager>();
     }
     void Start()
     {
-        currentState = headcountState;
+        currentState = bedtimeState;
         currentState.EnterState(this);
     }
 
@@ -132,6 +134,12 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         DebugToolKit.Log("Player headcount confirmed.");
         yield return new WaitForSeconds(3f);
         SwitchState(bedtimeState);
+    }
+
+    public IEnumerator CountdownSwitchState(float time, DailyRoutineBaseState nextState)
+    {
+        yield return new WaitForSeconds(10f);
+        this.SwitchState(nextState);
     }
 
 

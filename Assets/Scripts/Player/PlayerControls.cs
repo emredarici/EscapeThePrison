@@ -11,6 +11,7 @@ namespace Player
         private CharacterController controller;
         private CapsuleCollider capsuleCollider;
         private Transform cameraMainTransform;
+        public Transform startPosition;
 
         [SerializeField] private float playerSpeed = 5.0f;
         [SerializeField] private float runningSpeed = 8.0f;
@@ -44,6 +45,7 @@ namespace Player
 
         private void Start()
         {
+            this.transform.position = startPosition.position;
             cameraMainTransform = Camera.main.transform;
         }
 
