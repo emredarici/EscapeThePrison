@@ -208,8 +208,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorImage: {fileID: 1591343388}
-  actorName: {fileID: 0}
-  messageText: {fileID: 0}
+  actorName: {fileID: 134714925}
+  messageText: {fileID: 469423675}
   backgroundBox: {fileID: 44953179}
 --- !u!114 &44953181
 MonoBehaviour:
@@ -398,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78281619}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16743723, y: -0.000000008481737, z: 0.0000000014404943, w: 0.98588276}
+  m_LocalRotation: {x: 0.16743723, y: 0.000000008481737, z: -0.0000000014404945, w: 0.98588276}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5976,7 +5976,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653216628}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14952432, y: 0.00000001701295, z: -0.0000000025727729, w: 0.9887581}
+  m_LocalRotation: {x: 0.14952432, y: -0.000000017012946, z: 0.0000000025727724, w: 0.9887581}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
