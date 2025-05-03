@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class NPCState
 {
@@ -34,6 +35,11 @@ public abstract class NPCState
         }
     }
 
+    public virtual void Exit()
+    {
+        npc.animator.SetBool("isSleeping", false);
+    }
+
     public bool HasWaited(int minTime, int maxTime)
     {
         int randomTime = Random.Range(minTime, maxTime);
@@ -66,16 +72,31 @@ public class SleepingState : NPCState
 
     public override void Enter()
     {
+        Debug.Log("Sleeping");
         base.Enter();
-        npc.MoveTo(target.position, () => DebugToolKit.Log("Sleeping"));
+        npc.MoveTo(target.position, () =>
+        {
+            npc.agent.enabled = false;
+            npc.transform.position = npc.myCell.bedPosition.position;
+            npc.transform.rotation = npc.myCell.bedPosition.rotation;
+            npc.animator.SetBool("isSleeping", true);
+
+
+        });
     }
 
     public override void Update()
     {
-        if (HasWaited(5, 10))
+        if (HasWaited(10, 15))
         {
             RandomState(0, 3);
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        npc.agent.enabled = true;
     }
 }
 

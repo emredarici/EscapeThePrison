@@ -5,20 +5,27 @@ using UnityEngine.AI;
 public class NPCController : MonoBehaviour
 {
     public PrisonCell myCell;
-    private NavMeshAgent agent;
-    private NPCState currentState;
+    [HideInInspector] public NavMeshAgent agent;
+    public NPCState currentState;
+    public Animator animator;
 
     public bool hasRandomStateSet = false;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     public void SetState(NPCState newState)
     {
+        if (currentState != null)
+        {
+            currentState.Exit(); // Mevcut durumdan çık
+        }
+
         currentState = newState;
-        currentState.Enter();
+        currentState.Enter(); // Yeni duruma gir
     }
 
     private void Update()
@@ -38,6 +45,11 @@ public class NPCController : MonoBehaviour
             hasRandomStateSet = false;
             SetState(new IdleState(this));
         }
+
+        if (animator != null)
+        {
+            animator.SetBool("Walking", agent.velocity.magnitude > 0.1f);
+        }
     }
 
     public Transform GetBedPosition() => myCell.bedPosition;
@@ -56,6 +68,12 @@ public class NPCController : MonoBehaviour
         {
             yield return null;
         }
+
+        if (animator != null)
+        {
+            animator.SetBool("Walking", false);
+        }
+
         onArrived?.Invoke();
     }
 }

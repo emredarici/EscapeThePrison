@@ -41,6 +41,13 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         currentState.ExitState(this);
         currentState = newState;
         currentState.EnterState(this);
+        foreach (NavMeshAgent npc in npcs)
+        {
+            if (npc != null)
+            {
+                npc.enabled = true;
+            }
+        }
         DebugToolKit.Log("Switched to " + currentState);
     }
     public void ArrangeQueue()
@@ -76,7 +83,6 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         {
             if (!isMoving)
             {
-                DebugToolKit.Log("Moving NPCs to grab food position.");
                 isMoving = true;
 
                 NavMeshAgent firstNpc = npcs[0];
