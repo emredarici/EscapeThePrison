@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: White
+  m_Name: CharacterWhite
   m_Shader: {fileID: 4800000, guid: 313fcf3aebc04cf4ab4f8c5f2850be7f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -29,12 +29,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _OutlineWidth: 0.003
-    - _RimStep: 0
+    - _OutlineWidth: 0.002
+    - _RimStep: 0.65
     - _RimStepSmooth: 0.4
-    - _ShadowStep: 0.065
+    - _ShadowStep: 0.5
     - _ShadowStepSmooth: 0.04
-    - _SpecularStep: 0.127
+    - _SpecularStep: 0.6
     - _SpecularStepSmooth: 0.05
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
