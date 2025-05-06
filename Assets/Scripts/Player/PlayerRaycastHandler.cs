@@ -87,6 +87,11 @@ namespace Player
                 MinigameManager.Instance.RegisterMinigame("OpenDoor", GetComponent<OpenDoorMG>());
                 MinigameManager.Instance.StartMinigame("OpenDoor");
             }
+            if (hasHit && currentHit.collider.CompareTag("BrakeDoor"))
+            {
+                DebugToolKit.Log("Minigame Trigger detected!");
+                MinigameManager.Instance.StartMinigame("BrakeDoor");
+            }
         }
 
         private void OnSleepDetection()

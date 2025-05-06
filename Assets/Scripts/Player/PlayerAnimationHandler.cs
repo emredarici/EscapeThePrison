@@ -61,6 +61,16 @@ namespace Player
             return 0f;
         }
 
+        public void PlayHittingAnimation(Action onAnimationComplete)
+        {
+            animator.SetTrigger("Hitting");
+            float animationDuration = GetAnimationClipLength("Hitting");
+            StartCoroutine(WaitForAnimation(animationDuration, () =>
+            {
+                onAnimationComplete?.Invoke();
+            }));
+        }
+
         public void SleepPlayer()
         {
             playerControls.DisableInput();

@@ -6,7 +6,7 @@ namespace Player
     [RequireComponent(typeof(CharacterController))]
     public class PlayerControls : MonoBehaviour
     {
-        [SerializeField] private InputActionReference movementControl;
+        [SerializeField] public InputActionReference movementControl;
         [SerializeField] private InputActionReference runControl;
         private CharacterController controller;
         private CapsuleCollider capsuleCollider;

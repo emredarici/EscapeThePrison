@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCController : MonoBehaviour
+public class NPCController : Singleton<NPCController>
 {
     public PrisonCell myCell;
     [HideInInspector] public NavMeshAgent agent;
@@ -30,6 +30,7 @@ public class NPCController : MonoBehaviour
 
     private void Update()
     {
+
         if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
         {
             if (!hasRandomStateSet)
@@ -40,12 +41,6 @@ public class NPCController : MonoBehaviour
             }
             currentState?.Update();
         }
-        else
-        {
-            hasRandomStateSet = false;
-            SetState(new IdleState(this));
-        }
-
         if (animator != null)
         {
             animator.SetBool("Walking", agent.velocity.magnitude > 0.1f);
@@ -75,5 +70,15 @@ public class NPCController : MonoBehaviour
         }
 
         onArrived?.Invoke();
+    }
+
+    public void StartState()
+    {
+        if (DailyRoutineManager.Instance.currentState != DailyRoutineManager.Instance.bedtimeState)
+        {
+            hasRandomStateSet = false;
+            SetState(new IdleState(this));
+        }
+
     }
 }

@@ -19,6 +19,7 @@ public class MinigameManager : Singleton<MinigameManager>
     void Start()
     {
         RegisterMinigame("OpenDoor", GetComponent<OpenDoorMG>());
+        RegisterMinigame("BrakeDoor", GetComponent<BrakeDoorMG>());
     }
     void Update()
     {

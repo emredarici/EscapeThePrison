@@ -53,6 +53,7 @@ public class IdleState : NPCState
 
     public override void Enter()
     {
+        npc.agent.enabled = true;
     }
 
     public override void Update()
@@ -77,9 +78,9 @@ public class SleepingState : NPCState
         npc.MoveTo(target.position, () =>
         {
             npc.agent.enabled = false;
+            npc.animator.SetBool("isSleeping", true);
             npc.transform.position = npc.myCell.bedPosition.position;
             npc.transform.rotation = npc.myCell.bedPosition.rotation;
-            npc.animator.SetBool("isSleeping", true);
 
 
         });
