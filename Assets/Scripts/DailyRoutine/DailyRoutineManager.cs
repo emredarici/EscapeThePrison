@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using JetBrains.Annotations;
 
 public class DailyRoutineManager : Singleton<DailyRoutineManager>
 {
@@ -46,6 +47,8 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     }
     public void ArrangeQueue()
     {
+        PopulateNpcList();
+        CafetariaTableList();
         StartCoroutine(ArrangeQueueCoroutine());
     }
 
@@ -104,9 +107,19 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
             yield return null;
         }
+        VFXManager.Instance.SpawnLocationMarker(grabFoodPosition.transform.position);
+        UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Your food's ready, grab it and sit at the table.");
 
         DebugToolKit.Log("MoveQueue completed.");
 
+    }
+
+    public Transform PlayerRandomTablePosition()
+    {
+        int randomIndex = Random.Range(0, exitPosition.Count);
+        Transform randomTable = exitPosition[randomIndex];
+        exitPosition.RemoveAt(randomIndex);
+        return randomTable;
     }
 
 
@@ -141,6 +154,40 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         yield return new WaitForSeconds(10f);
         this.SwitchState(nextState);
     }
+
+    public void PopulateNpcList()
+    {
+        GameObject[] npcObjects = GameObject.FindGameObjectsWithTag("NPC");
+
+        npcs.Clear();
+
+        foreach (GameObject npcObject in npcObjects)
+        {
+            NavMeshAgent agent = npcObject.GetComponent<NavMeshAgent>();
+            if (agent != null)
+            {
+                npcs.Add(agent);
+            }
+        }
+    }
+
+    public void CafetariaTableList()
+    {
+        GameObject[] tableObjects = GameObject.FindGameObjectsWithTag("CafetariaTable");
+
+        exitPosition.Clear();
+
+        foreach (GameObject tableObject in tableObjects)
+        {
+            Transform tableTransform = tableObject.transform;
+            if (tableTransform != null)
+            {
+                exitPosition.Add(tableTransform);
+            }
+        }
+
+    }
+
 
 
 }

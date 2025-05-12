@@ -11,6 +11,7 @@ public class HeadcountState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
+        dailyRoutineManager.PopulateNpcList();
         dailyRoutineManager.NpcHeadCount();
     }
 
@@ -46,6 +47,8 @@ public class ChowtimeState : DailyRoutineBaseState
     public override void ExitState(DailyRoutineManager dailyRoutineManager)
     {
     }
+
+
 }
 
 public class RectimeState : DailyRoutineBaseState

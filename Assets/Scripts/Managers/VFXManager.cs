@@ -20,4 +20,10 @@ public class VFXManager : Singleton<VFXManager>
         DebugToolKit.Log(marker + " destroyed.");
     }
 
+    public void DestroyMarker(float delay)
+    {
+        Destroy(marker, delay);
+        DebugToolKit.Log(marker + " destroyed after " + delay + " seconds.");
+    }
+
 }

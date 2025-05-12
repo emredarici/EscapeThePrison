@@ -9,6 +9,8 @@ TagManager:
   - Door
   - Bed
   - BrakeDoor
+  - CafetariaTable
+  - NPC
   layers:
   - Default
   - TransparentFX

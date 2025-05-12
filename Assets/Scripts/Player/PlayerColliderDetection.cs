@@ -9,6 +9,8 @@ namespace Player
         private IPlayerAnimationHandler animationHandler;
         private PlayerControls playerControls;
 
+        private int triggerCount = 0;
+
         private void Awake()
         {
             animationHandler = GetComponent<IPlayerAnimationHandler>();
@@ -31,6 +33,7 @@ namespace Player
             {
                 currentCollectible = null;
             }
+
         }
 
         private void Update()
@@ -49,6 +52,25 @@ namespace Player
                 if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.headcountState)
                 {
                     DailyRoutineManager.Instance.PlayerHeadCount();
+                }
+
+                if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
+                {
+                    if (triggerCount == 0)
+                    {
+                        VFXManager.Instance.DestroyMarker(2f);
+                        VFXManager.Instance.SpawnLocationMarker(DailyRoutineManager.Instance.PlayerRandomTablePosition().position);
+                    }
+
+                    if (triggerCount > 0)
+                    {
+                        VFXManager.Instance.DestroyMarker(2f);
+                        DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.rectimeState);
+                        triggerCount = 0;
+                        return;
+                    }
+                    triggerCount++;
+
                 }
             }
         }

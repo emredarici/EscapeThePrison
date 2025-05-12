@@ -78,6 +78,7 @@ namespace Player
             {
                 animator.SetBool("Sleep", false);
                 SetMovementSpeed(0);
+                playerControls.transform.position = new Vector3(bedPosition.position.x + 1.7f, playerControls.transform.position.y, playerControls.transform.position.z);
                 playerControls.EnableInput();
 
                 if (characterController != null)
