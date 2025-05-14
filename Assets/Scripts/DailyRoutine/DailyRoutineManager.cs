@@ -17,6 +17,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public Transform headcountPosition;
     public List<Transform> exitPosition;
     public GameObject cellDoors;
+    public GameObject mainDoor;
     public GameObject lockPosition;
     private float stepDistance = 2f;
 
@@ -128,10 +129,10 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     {
         for (int i = 0; i < npcs.Count; i++)
         {
-            Vector3 newPos = headcountPosition.position - headcountPosition.right * (i * stepDistance);
+            Vector3 newPos = headcountPosition.position - (headcountPosition.forward * -1) * (i * stepDistance);
             npcs[i].SetDestination(newPos);
         }
-        VFXManager.Instance.SpawnLocationMarker(headcountPosition.position - headcountPosition.right * (npcs.Count + 1 * stepDistance));
+        VFXManager.Instance.SpawnLocationMarker(headcountPosition.position - (headcountPosition.forward * -1) * (npcs.Count + 1 * stepDistance));
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Counting is starting, please proceed to the designated area!");
     }
 
@@ -147,7 +148,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, $"Attendance confirmed. Headcount: {npcs.Count + 1}.");
         DebugToolKit.Log("Player headcount confirmed.");
         yield return new WaitForSeconds(3f);
-        SwitchState(bedtimeState);
+        this.SwitchState(rectimeState);
     }
 
     public IEnumerator CountdownSwitchState(float time, DailyRoutineBaseState nextState)
@@ -191,6 +192,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
     public void OpenAllCellDoors()
     {
+        mainDoor.transform.position = new Vector3(-11.86f, 1.77f, 10.033f);
         foreach (Transform child in cellDoors.transform)
         {
             child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, 150f);
@@ -200,6 +202,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public void CloseAllCellDoors()
     {
         lockPosition.SetActive(false);
+        mainDoor.transform.position = new Vector3(-10.145f, 1.77f, 10.033f);
         foreach (Transform child in cellDoors.transform)
         {
             child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, -150f);

@@ -17,10 +17,7 @@ public class HeadcountState : DailyRoutineBaseState
 
     public override void UpdateState(DailyRoutineManager dailyRoutineManager)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            dailyRoutineManager.SwitchState(dailyRoutineManager.bedtimeState);
-        }
+
     }
 
     public override void ExitState(DailyRoutineManager dailyRoutineManager)
@@ -36,6 +33,7 @@ public class ChowtimeState : DailyRoutineBaseState
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
         dailyRoutineManager.ArrangeQueue();
+        UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Time to eat, all prisoners to the cafeteria!");
 
     }
 
@@ -100,6 +98,7 @@ public class BedtimeState : DailyRoutineBaseState
             Object.Destroy(UIManager.Instance.movementTrailer);
         }
         dailyRoutineManager.OpenAllCellDoors();
+        UIManager.Instance.DeleteText(UIManager.Instance.informationText);
     }
 
 
