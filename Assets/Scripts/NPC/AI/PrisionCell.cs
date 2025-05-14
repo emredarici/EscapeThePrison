@@ -5,4 +5,5 @@ public class PrisonCell : MonoBehaviour
     public Transform bedPosition;
     public Transform barsPosition;
     public Transform toiletPosition;
+    public Transform rectimePosition;
 }

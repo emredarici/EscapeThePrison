@@ -79,6 +79,10 @@ public class SleepingState : NPCState
         {
             npc.agent.enabled = false;
             npc.animator.SetBool("isSleeping", true);
+            if (HasWaited(5, 10))
+            {
+                RandomState(0, 3);
+            }
             npc.transform.position = npc.myCell.bedPosition.position;
             npc.transform.rotation = npc.myCell.bedPosition.rotation;
 
@@ -88,10 +92,7 @@ public class SleepingState : NPCState
 
     public override void Update()
     {
-        if (HasWaited(10, 15))
-        {
-            RandomState(0, 3);
-        }
+
     }
 
     public override void Exit()

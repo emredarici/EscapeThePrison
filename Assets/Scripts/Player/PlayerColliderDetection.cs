@@ -25,6 +25,11 @@ namespace Player
             {
                 currentCollectible = collectible;
             }
+
+            if (other.CompareTag("Lock"))
+            {
+                DailyRoutineManager.Instance.CloseAllCellDoors();
+            }
         }
 
         private void OnTriggerExit(Collider other)

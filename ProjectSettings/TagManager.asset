@@ -11,6 +11,7 @@ TagManager:
   - BrakeDoor
   - CafetariaTable
   - NPC
+  - Lock
   layers:
   - Default
   - TransparentFX

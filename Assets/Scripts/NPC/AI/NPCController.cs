@@ -50,6 +50,7 @@ public class NPCController : Singleton<NPCController>
     public Transform GetBedPosition() => myCell.bedPosition;
     public Transform GetBarsPosition() => myCell.barsPosition;
     public Transform GetToiletPosition() => myCell.toiletPosition;
+    public Transform GetRectimePosition() => myCell.rectimePosition;
 
     public void MoveTo(Vector3 destination, System.Action onArrived)
     {
@@ -80,5 +81,13 @@ public class NPCController : Singleton<NPCController>
             SetState(new IdleState(this));
         }
 
+    }
+
+    public void RectimeStateNPC()
+    {
+        MoveTo(this.myCell.rectimePosition.position, () =>
+        {
+            Debug.Log("NPC is at rectime position");
+        });
     }
 }

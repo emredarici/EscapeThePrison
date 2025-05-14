@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using JetBrains.Annotations;
 
 public class DailyRoutineManager : Singleton<DailyRoutineManager>
 {
@@ -17,6 +16,8 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public Transform grabFoodPosition;
     public Transform headcountPosition;
     public List<Transform> exitPosition;
+    public GameObject cellDoors;
+    public GameObject lockPosition;
     private float stepDistance = 2f;
 
     [HideInInspector] public bool isMoving = false;
@@ -151,7 +152,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
     public IEnumerator CountdownSwitchState(float time, DailyRoutineBaseState nextState)
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(time);
         this.SwitchState(nextState);
     }
 
@@ -188,6 +189,20 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
     }
 
+    public void OpenAllCellDoors()
+    {
+        foreach (Transform child in cellDoors.transform)
+        {
+            child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, 150f);
+        }
+    }
 
-
+    public void CloseAllCellDoors()
+    {
+        lockPosition.SetActive(false);
+        foreach (Transform child in cellDoors.transform)
+        {
+            child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, -150f);
+        }
+    }
 }

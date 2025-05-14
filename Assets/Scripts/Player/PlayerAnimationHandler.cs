@@ -74,6 +74,7 @@ namespace Player
         public void SleepPlayer()
         {
             playerControls.DisableInput();
+            UIManager.Instance.FadeCamera(false, 1.0f);
             PlaySleepAnimation(() =>
             {
                 animator.SetBool("Sleep", false);
@@ -85,7 +86,9 @@ namespace Player
                 {
                     characterController.enabled = true;
                 }
-
+                UIManager.Instance.FadeCamera(true, 1.0f);
+                DailyRoutineManager.Instance.dayManager.NextDay();
+                DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.chowtimeState);
             });
         }
 
