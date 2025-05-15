@@ -11,6 +11,7 @@ public class UIManager : Singleton<UIManager>
 
     public void ChangeText(TextMeshProUGUI text, string message)
     {
+        DeleteText(text);
         StartCoroutine(TypeTextEffect(text, message, 0.05f));
     }
 

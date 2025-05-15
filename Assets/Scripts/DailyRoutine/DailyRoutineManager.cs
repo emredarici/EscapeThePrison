@@ -129,13 +129,40 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     {
         for (int i = 0; i < npcs.Count; i++)
         {
-            Vector3 newPos = headcountPosition.position - (headcountPosition.forward * -1) * (i * stepDistance);
+            Vector3 newPos = headcountPosition.position - headcountPosition.right * (i * stepDistance);
             npcs[i].SetDestination(newPos);
         }
-        VFXManager.Instance.SpawnLocationMarker(headcountPosition.position - (headcountPosition.forward * -1) * (npcs.Count + 1 * stepDistance));
+        VFXManager.Instance.SpawnLocationMarker(headcountPosition.position - headcountPosition.right * (npcs.Count + 1 * stepDistance));
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Counting is starting, please proceed to the designated area!");
+        StartCoroutine(ResetNpcRotationsWhenArrived());
     }
 
+    private IEnumerator ResetNpcRotationsWhenArrived()
+    {
+        bool allArrived = false;
+        while (!allArrived)
+        {
+            allArrived = true;
+            foreach (var npc in npcs)
+            {
+                if (npc.enabled && npc.isOnNavMesh)
+                {
+                    // Yol bitmiş mi ve hedefe yeterince yakın mı?
+                    if (npc.pathPending || npc.remainingDistance > 0.1f || npc.hasPath)
+                    {
+                        allArrived = false;
+                        break;
+                    }
+                }
+            }
+            yield return null;
+        }
+
+        foreach (var npc in npcs)
+        {
+            npc.transform.rotation = Quaternion.identity;
+        }
+    }
     public void PlayerHeadCount()
     {
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Counting is in progress, please stand by.");
@@ -144,11 +171,11 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
     private IEnumerator PlayerHeadCountCoroutine()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(8f);
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, $"Attendance confirmed. Headcount: {npcs.Count + 1}.");
         DebugToolKit.Log("Player headcount confirmed.");
-        yield return new WaitForSeconds(3f);
-        this.SwitchState(rectimeState);
+        yield return new WaitForSeconds(5f);
+        this.SwitchState(chowtimeState);
     }
 
     public IEnumerator CountdownSwitchState(float time, DailyRoutineBaseState nextState)

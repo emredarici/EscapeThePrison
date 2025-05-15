@@ -88,7 +88,7 @@ namespace Player
                 }
                 UIManager.Instance.FadeCamera(true, 1.0f);
                 DailyRoutineManager.Instance.dayManager.NextDay();
-                DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.chowtimeState);
+                DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.headcountState);
             });
         }
 

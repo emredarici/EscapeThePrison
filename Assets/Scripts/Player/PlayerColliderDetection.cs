@@ -70,7 +70,7 @@ namespace Player
                     if (triggerCount > 0)
                     {
                         VFXManager.Instance.DestroyMarker(2f);
-                        DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.headcountState);
+                        DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.rectimeState);
                         triggerCount = 0;
                         return;
                     }

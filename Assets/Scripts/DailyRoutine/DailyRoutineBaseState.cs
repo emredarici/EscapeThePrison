@@ -81,7 +81,7 @@ public class BedtimeState : DailyRoutineBaseState
         if (dailyRoutineManager.dayManager.IsDay(Day.Day1))
         {
             UIManager.Instance.movementTrailer.SetActive(true);
-            dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(10f, dailyRoutineManager.chowtimeState));
+            dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(10f, dailyRoutineManager.headcountState));
         }
     }
 
