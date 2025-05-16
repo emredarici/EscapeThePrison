@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
@@ -7,22 +8,35 @@ public class UIManager : Singleton<UIManager>
 {
     public TextMeshProUGUI informationText;
     public GameObject movementTrailer;
+    private Dictionary<TextMeshProUGUI, Coroutine> typeCoroutines = new Dictionary<TextMeshProUGUI, Coroutine>();
     public Image fadeImage;
 
     public void ChangeText(TextMeshProUGUI text, string message)
     {
         DeleteText(text);
-        StartCoroutine(TypeTextEffect(text, message, 0.05f));
+        StartTypeTextEffect(text, message, 0.05f);
+
     }
 
     public void DeleteText(TextMeshProUGUI text)
     {
-        text.text = "";
+        StartTypeTextEffect(text, "", 0);
     }
 
     public void FadeCamera(bool fadeIn, float duration)
     {
         StartCoroutine(FadeCoroutine(fadeIn, duration));
+    }
+
+    private void StartTypeTextEffect(TextMeshProUGUI text, string message, float delay)
+    {
+        // Eğer bu text için bir coroutine zaten çalışıyorsa yeni başlatma, mevcut devam etsin
+        if (typeCoroutines.ContainsKey(text) && typeCoroutines[text] != null)
+        {
+            return;
+        }
+        // Yeni coroutine başlat ve kaydet
+        typeCoroutines[text] = StartCoroutine(TypeTextEffect(text, message, delay));
     }
 
     public IEnumerator TypeTextEffect(TextMeshProUGUI text, string message, float delay)
@@ -33,6 +47,9 @@ public class UIManager : Singleton<UIManager>
             text.text += letter;
             yield return new WaitForSeconds(delay);
         }
+        // Bittiğinde coroutine referansını kaldır
+        if (typeCoroutines.ContainsKey(text))
+            typeCoroutines[text] = null;
     }
 
     private IEnumerator FadeCoroutine(bool fadeIn, float duration)

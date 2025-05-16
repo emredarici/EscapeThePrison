@@ -21,6 +21,7 @@ public class ChasePolice : MonoBehaviour
     public float patrolSpeed = 2f;
 
     private NavMeshAgent agent;
+    private Animator animator;
     private Transform currentTarget;
     private AIState currentState;
 
@@ -33,8 +34,9 @@ public class ChasePolice : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         currentTarget = pointA;
-        currentState = AIState.Patrol; // Başlangıç durumu devriye
+        currentState = AIState.Patrol;
     }
 
     private void Update()
@@ -59,7 +61,7 @@ public class ChasePolice : MonoBehaviour
             currentState = AIState.Chase;
             return;
         }
-
+        animator.SetFloat("Speed", 0.5f);
         Patrol();
     }
 
@@ -72,6 +74,7 @@ public class ChasePolice : MonoBehaviour
             return;
         }
 
+        animator.SetFloat("Speed", 1f);
         ChasePlayer();
     }
 
@@ -80,16 +83,13 @@ public class ChasePolice : MonoBehaviour
         Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-        // Görüş mesafesi kontrolü
         if (distanceToPlayer > viewDistance)
             return false;
 
-        // Görüş açısı kontrolü
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
         if (angleToPlayer > fovAngle / 2f)
             return false;
 
-        // Görüş engeli kontrolü (Raycast)
         if (Physics.Raycast(transform.position, directionToPlayer, out RaycastHit hit, viewDistance))
         {
             if (hit.transform.CompareTag("Player"))

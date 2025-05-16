@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class DailyRoutineBaseState
 {
@@ -11,6 +13,7 @@ public class HeadcountState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
+        dailyRoutineManager.headcountPolice.SetActive(true);
         dailyRoutineManager.PopulateNpcList();
         dailyRoutineManager.NpcHeadCount();
     }
@@ -22,9 +25,16 @@ public class HeadcountState : DailyRoutineBaseState
 
     public override void ExitState(DailyRoutineManager dailyRoutineManager)
     {
+        dailyRoutineManager.StartCoroutine(SetActivepolice(5f, dailyRoutineManager.headcountPolice));
         DebugToolKit.Log("Exiting Headcount State");
         UIManager.Instance.DeleteText(UIManager.Instance.informationText);
         VFXManager.Instance.DestroyMarker();
+    }
+
+    private IEnumerator SetActivepolice(float time, GameObject police)
+    {
+        yield return new WaitForSeconds(time);
+        police.SetActive(false);
     }
 }
 
@@ -80,6 +90,10 @@ public class BedtimeState : DailyRoutineBaseState
     {
         if (dailyRoutineManager.dayManager.IsDay(Day.Day1))
         {
+            if (UIManager.Instance.movementTrailer == null)
+            {
+                return;
+            }
             UIManager.Instance.movementTrailer.SetActive(true);
             dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(10f, dailyRoutineManager.headcountState));
         }

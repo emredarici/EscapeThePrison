@@ -14,11 +14,16 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
     public List<NavMeshAgent> npcs;
     public Transform grabFoodPosition;
-    public Transform headcountPosition;
     public List<Transform> exitPosition;
     public GameObject cellDoors;
     public GameObject mainDoor;
     public GameObject lockPosition;
+
+    [Header("Headcount")]
+    public GameObject headcountPolice;
+    public Transform headcountPosition;
+
+
     private float stepDistance = 2f;
 
     [HideInInspector] public bool isMoving = false;
@@ -147,7 +152,6 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
             {
                 if (npc.enabled && npc.isOnNavMesh)
                 {
-                    // Yol bitmiş mi ve hedefe yeterince yakın mı?
                     if (npc.pathPending || npc.remainingDistance > 0.1f || npc.hasPath)
                     {
                         allArrived = false;
@@ -222,7 +226,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         mainDoor.transform.position = new Vector3(-11.86f, 1.77f, 10.033f);
         foreach (Transform child in cellDoors.transform)
         {
-            child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, 150f);
+            child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, 90);
         }
     }
 
@@ -232,7 +236,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         mainDoor.transform.position = new Vector3(-10.145f, 1.77f, 10.033f);
         foreach (Transform child in cellDoors.transform)
         {
-            child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, -150f);
+            child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, -90);
         }
     }
 }
