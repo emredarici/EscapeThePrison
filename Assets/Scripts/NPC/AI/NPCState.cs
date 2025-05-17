@@ -20,6 +20,7 @@ public abstract class NPCState
 
     public void RandomState(int a, int b)
     {
+
         int random = Random.Range(a, b);
         switch (random)
         {
@@ -75,19 +76,25 @@ public class SleepingState : NPCState
     {
         Debug.Log("Sleeping");
         base.Enter();
-        npc.MoveTo(target.position, () =>
+        npc.MoveTo(target.position, OnReachedBed);
+    }
+
+    private void OnReachedBed()
+    {
+        npc.StartCoroutine(SleepRoutine());
+    }
+
+    private System.Collections.IEnumerator SleepRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+        npc.agent.enabled = false;
+        npc.animator.SetBool("isSleeping", true);
+        if (HasWaited(5, 10))
         {
-            npc.agent.enabled = false;
-            npc.animator.SetBool("isSleeping", true);
-            if (HasWaited(5, 10))
-            {
-                RandomState(0, 3);
-            }
-            npc.transform.position = npc.myCell.bedPosition.position;
-            npc.transform.rotation = npc.myCell.bedPosition.rotation;
-
-
-        });
+            RandomState(0, 3);
+        }
+        npc.transform.position = npc.myCell.bedPosition.position;
+        npc.transform.rotation = npc.myCell.bedPosition.rotation;
     }
 
     public override void Update()
