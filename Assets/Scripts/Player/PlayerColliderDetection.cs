@@ -77,6 +77,10 @@ namespace Player
                     triggerCount++;
 
                 }
+                if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState && DailyRoutineManager.Instance.lockPosition.activeSelf)
+                {
+                    VFXManager.Instance.DestroyMarker();
+                }
             }
         }
 

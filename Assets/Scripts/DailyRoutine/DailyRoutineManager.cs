@@ -12,6 +12,8 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public RectimeState rectimeState = new RectimeState();
     public BedtimeState bedtimeState = new BedtimeState();
 
+    public NPCController[] allNpcs => FindObjectsOfType<NPCController>();
+
     public List<NavMeshAgent> npcs;
     public Transform grabFoodPosition;
     public List<Transform> exitPosition;
@@ -30,6 +32,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
     protected override void Awake()
     {
+
         DontDestroyOnLoad(gameObject);
         dayManager = FindObjectOfType<DayManager>();
     }
@@ -48,7 +51,10 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     {
         currentState.ExitState(this);
         currentState = newState;
-        NPCController.Instance.StartState();
+        foreach (var npc in allNpcs)
+        {
+            npc.StartState();
+        }
         currentState.EnterState(this);
         DebugToolKit.Log("Switched to " + currentState);
     }
@@ -63,7 +69,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     {
         for (int i = 0; i < npcs.Count; i++)
         {
-            Vector3 newPos = grabFoodPosition.position - grabFoodPosition.forward * (i * stepDistance);
+            Vector3 newPos = grabFoodPosition.position - grabFoodPosition.right * (i * stepDistance);
             npcs[i].SetDestination(newPos);
         }
 
@@ -102,7 +108,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
                     exitPosition.RemoveAt(0);
                     for (int i = 0; i < npcs.Count; i++)
                     {
-                        Vector3 newPos = grabFoodPosition.position - grabFoodPosition.forward * (i * stepDistance);
+                        Vector3 newPos = grabFoodPosition.position - grabFoodPosition.right * (i * stepDistance);
                         npcs[i].SetDestination(newPos);
                     }
                     yield return new WaitForSeconds(5f);

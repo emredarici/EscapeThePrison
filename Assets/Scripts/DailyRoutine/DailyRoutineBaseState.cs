@@ -64,7 +64,10 @@ public class RectimeState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
-        NPCController.Instance.RectimeStateNPC();
+        foreach (var npc in dailyRoutineManager.allNpcs)
+        {
+            npc.RectimeStateNPC();
+        }
         if (dailyRoutineManager.dayManager.IsDay(Day.Day1))
         {
             dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(30, dailyRoutineManager.bedtimeState));
@@ -80,6 +83,7 @@ public class RectimeState : DailyRoutineBaseState
     {
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Time to sleep, all prisoners to your cells!");
         dailyRoutineManager.lockPosition.SetActive(true);
+        VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.lockPosition.transform.position);
     }
 }
 
@@ -97,6 +101,7 @@ public class BedtimeState : DailyRoutineBaseState
             UIManager.Instance.movementTrailer.SetActive(true);
             dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(10f, dailyRoutineManager.headcountState));
         }
+
     }
 
     public override void UpdateState(DailyRoutineManager dailyRoutineManager)

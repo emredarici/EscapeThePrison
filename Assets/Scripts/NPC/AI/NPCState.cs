@@ -25,20 +25,20 @@ public abstract class NPCState
         switch (random)
         {
             case 0:
-                npc.SetState(new SleepingState(npc));
+                this.npc.SetState(new SleepingState(npc));
                 break;
             case 1:
-                npc.SetState(new LookingOutsideState(npc));
+                this.npc.SetState(new LookingOutsideState(npc));
                 break;
             case 2:
-                npc.SetState(new ToiletState(npc));
+                this.npc.SetState(new ToiletState(npc));
                 break;
         }
     }
 
     public virtual void Exit()
     {
-        npc.animator.SetBool("isSleeping", false);
+        this.npc.animator.SetBool("isSleeping", false);
     }
 
     public bool HasWaited(int minTime, int maxTime)
@@ -54,7 +54,7 @@ public class IdleState : NPCState
 
     public override void Enter()
     {
-        npc.agent.enabled = true;
+        this.npc.agent.enabled = true;
     }
 
     public override void Update()
@@ -69,27 +69,26 @@ public class SleepingState : NPCState
 
     public SleepingState(NPCController npc) : base(npc)
     {
-        target = npc.GetBedPosition();
+        this.target = npc.GetBedPosition();
     }
 
     public override void Enter()
     {
         Debug.Log("Sleeping");
         base.Enter();
-        npc.MoveTo(target.position, OnReachedBed);
+        this.npc.MoveTo(target.position, OnReachedBed);
     }
 
     private void OnReachedBed()
     {
-        npc.StartCoroutine(SleepRoutine());
+        SleepRoutine();
     }
 
-    private System.Collections.IEnumerator SleepRoutine()
+    private void SleepRoutine()
     {
-        yield return new WaitForSeconds(2f);
         npc.agent.enabled = false;
         npc.animator.SetBool("isSleeping", true);
-        if (HasWaited(5, 10))
+        if (HasWaited(15, 20))
         {
             RandomState(0, 3);
         }

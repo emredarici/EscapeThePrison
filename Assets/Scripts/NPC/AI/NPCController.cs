@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCController : Singleton<NPCController>
+public class NPCController : MonoBehaviour
 {
     public PrisonCell myCell;
     [HideInInspector] public NavMeshAgent agent;
@@ -13,7 +13,7 @@ public class NPCController : Singleton<NPCController>
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = this.GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -60,7 +60,7 @@ public class NPCController : Singleton<NPCController>
 
     private IEnumerator WaitUntilArrived(System.Action onArrived)
     {
-        while (agent.pathPending || agent.remainingDistance > 0.1f)
+        while (agent.enabled && agent.isOnNavMesh && (agent.pathPending || agent.remainingDistance > 0.1f))
         {
             yield return null;
         }
