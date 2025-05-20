@@ -80,6 +80,7 @@ public class NPCController : MonoBehaviour
             hasRandomStateSet = false;
             SetState(new IdleState(this));
         }
+        animator.SetBool("isSitting", false);
     }
 
     public void RectimeStateNPC()

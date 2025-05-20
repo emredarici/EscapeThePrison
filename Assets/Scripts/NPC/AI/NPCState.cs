@@ -108,6 +108,7 @@ public class SleepingState : NPCState
     public override void Exit()
     {
         base.Exit();
+        this.npc.animator.SetBool("isSleeping", false);
         npc.agent.enabled = true;
     }
 }
