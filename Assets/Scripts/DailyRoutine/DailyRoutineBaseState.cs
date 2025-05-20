@@ -15,6 +15,12 @@ public class HeadcountState : DailyRoutineBaseState
     {
         dailyRoutineManager.headcountPolice.SetActive(true);
         dailyRoutineManager.PopulateNpcList();
+        foreach (var npc in dailyRoutineManager.allNpcs)
+        {
+
+            if (npc.GetComponent<NavMeshAgent>().enabled == false)
+                npc.GetComponent<NavMeshAgent>().enabled = true;
+        }
         dailyRoutineManager.NpcHeadCount();
     }
 

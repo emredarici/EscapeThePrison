@@ -53,6 +53,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         currentState = newState;
         foreach (var npc in allNpcs)
         {
+            PopulateNpcList();
             npc.StartState();
         }
         currentState.EnterState(this);
@@ -140,10 +141,12 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     {
         for (int i = 0; i < npcs.Count; i++)
         {
-            Vector3 newPos = headcountPosition.position - headcountPosition.right * (i * stepDistance);
+            Vector3 newPos = headcountPosition.position + Vector3.left * (i * stepDistance);
             npcs[i].SetDestination(newPos);
         }
-        VFXManager.Instance.SpawnLocationMarker(headcountPosition.position - headcountPosition.right * (npcs.Count + 1 * stepDistance));
+        float markerX = headcountPosition.position.x - (npcs.Count * stepDistance);
+        Vector3 markerPos = new Vector3(markerX, headcountPosition.position.y, headcountPosition.position.z);
+        VFXManager.Instance.SpawnLocationMarker(markerPos);
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Counting is starting, please proceed to the designated area!");
         StartCoroutine(ResetNpcRotationsWhenArrived());
     }
@@ -205,6 +208,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
             NavMeshAgent agent = npcObject.GetComponent<NavMeshAgent>();
             if (agent != null)
             {
+                agent.enabled = true;
                 npcs.Add(agent);
             }
         }

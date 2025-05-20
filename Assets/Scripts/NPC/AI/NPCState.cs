@@ -39,6 +39,7 @@ public abstract class NPCState
     public virtual void Exit()
     {
         this.npc.animator.SetBool("isSleeping", false);
+        this.npc.agent.enabled = true;
     }
 
     public bool HasWaited(int minTime, int maxTime)
@@ -90,7 +91,10 @@ public class SleepingState : NPCState
         npc.animator.SetBool("isSleeping", true);
         if (HasWaited(15, 20))
         {
-            RandomState(0, 3);
+            if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
+                RandomState(0, 3);
+            else
+                return;
         }
         npc.transform.position = npc.myCell.bedPosition.position;
         npc.transform.rotation = npc.myCell.bedPosition.rotation;
@@ -127,7 +131,10 @@ public class LookingOutsideState : NPCState
     {
         if (HasWaited(5, 7))
         {
-            RandomState(0, 3);
+            if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
+                RandomState(0, 3);
+            else
+                return;
         }
     }
 }
@@ -151,7 +158,10 @@ public class ToiletState : NPCState
     {
         if (HasWaited(7, 10))
         {
-            RandomState(0, 3);
+            if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
+                RandomState(0, 3);
+            else
+                return;
         }
     }
 }

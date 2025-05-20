@@ -80,7 +80,6 @@ public class NPCController : MonoBehaviour
             hasRandomStateSet = false;
             SetState(new IdleState(this));
         }
-
     }
 
     public void RectimeStateNPC()
