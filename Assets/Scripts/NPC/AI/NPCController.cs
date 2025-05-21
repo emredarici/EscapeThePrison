@@ -6,6 +6,7 @@ public class NPCController : MonoBehaviour
 {
     public PrisonCell myCell;
     [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public Transform targetExitPosition;
     public NPCState currentState;
     public Animator animator;
 
@@ -69,6 +70,7 @@ public class NPCController : MonoBehaviour
         {
             animator.SetBool("Walking", false);
         }
+
 
         onArrived?.Invoke();
     }

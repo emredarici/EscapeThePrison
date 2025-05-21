@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7905756253625638805}
   - component: {fileID: 6754758190480696262}
   - component: {fileID: 7868918609027905676}
+  - component: {fileID: -2932374871214650886}
+  - component: {fileID: 2866864482103219837}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -96,6 +98,45 @@ CapsuleCollider:
   m_Height: 1.8254876
   m_Direction: 1
   m_Center: {x: -0, y: 0.9411783, z: -0}
+--- !u!114 &-2932374871214650886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4705466403677816211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38de82595bc90d043b839742514ac761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &2866864482103219837
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4705466403677816211}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1135061928171827005
 PrefabInstance:
   m_ObjectHideFlags: 0

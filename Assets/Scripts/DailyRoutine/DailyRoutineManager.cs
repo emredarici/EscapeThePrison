@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SocialPlatforms;
 
 public class DailyRoutineManager : Singleton<DailyRoutineManager>
 {
@@ -75,7 +74,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
             npcs[i].SetDestination(newPos);
         }
 
-        float waitTime = 15f;
+        float waitTime = 25f;
         float elapsedTime = 0f;
 
         while (elapsedTime < waitTime)
@@ -98,27 +97,24 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
                 isMoving = true;
 
                 NavMeshAgent firstNpc = npcs[0];
-                Transform currentExitPosition = exitPosition[0];
-                firstNpc.SetDestination(currentExitPosition.position);
-
-                // Action ile çağır: NPC hedefe ulaşınca işlemler yapılsın
-                yield return StartCoroutine(WaitUntilArrived(firstNpc, currentExitPosition.position, () =>
+                if (Mathf.Abs(firstNpc.transform.position.x - grabFoodPosition.position.x) <= 0.1f)
                 {
+                    Transform currentExitPosition = exitPosition[0];
+                    firstNpc.GetComponent<NPCController>().targetExitPosition = currentExitPosition;
+                    firstNpc.SetDestination(currentExitPosition.position);
+
                     DebugToolKit.Log("NPC reached exit position.");
-                    firstNpc.transform.position = currentExitPosition.position;
-                    firstNpc.transform.localRotation = currentExitPosition.localRotation;
-                    firstNpc.gameObject.GetComponentInChildren<Animator>().SetBool("isSitting", true);
-                }));
 
-                npcs.RemoveAt(0);
-                exitPosition.RemoveAt(0);
-                for (int i = 0; i < npcs.Count; i++)
-                {
-                    Vector3 newPos = grabFoodPosition.position - grabFoodPosition.right * (i * stepDistance);
-                    npcs[i].SetDestination(newPos);
+                    npcs.RemoveAt(0);
+                    exitPosition.RemoveAt(0);
+                    for (int i = 0; i < npcs.Count; i++)
+                    {
+                        Vector3 newPos = grabFoodPosition.position - grabFoodPosition.right * (i * stepDistance);
+                        npcs[i].SetDestination(newPos);
+                    }
+                    yield return new WaitForSeconds(5f);
+
                 }
-                yield return new WaitForSeconds(5f);
-
                 isMoving = false;
             }
             yield return null;
@@ -127,17 +123,6 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Your food's ready, grab it and sit at the table.");
 
         DebugToolKit.Log("MoveQueue completed.");
-    }
-
-    // Hedefe varışı bekleyen yardımcı coroutine
-    private IEnumerator WaitUntilArrived(NavMeshAgent agent, Vector3 targetPos, System.Action onArrived = null)
-    {
-        while (agent.enabled && agent.isOnNavMesh &&
-               (agent.pathPending || agent.remainingDistance > 0.1f || agent.velocity.sqrMagnitude > 0.01f))
-        {
-            yield return null;
-        }
-        onArrived?.Invoke();
     }
 
     public Transform PlayerRandomTablePosition()
