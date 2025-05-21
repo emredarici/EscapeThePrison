@@ -29,6 +29,11 @@ public class NPCController : MonoBehaviour
         currentState.Enter(); // Yeni duruma gir
     }
 
+    public void OnPositionReset()
+    {
+        agent.Warp(myCell.barsPosition.transform.position);
+    }
+
     private void Update()
     {
 

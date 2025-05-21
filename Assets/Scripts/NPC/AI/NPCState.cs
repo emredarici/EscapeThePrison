@@ -82,7 +82,8 @@ public class SleepingState : NPCState
 
     private void OnReachedBed()
     {
-        SleepRoutine();
+        if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
+            SleepRoutine();
     }
 
     private void SleepRoutine()

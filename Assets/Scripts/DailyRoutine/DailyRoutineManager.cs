@@ -74,7 +74,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
             npcs[i].SetDestination(newPos);
         }
 
-        float waitTime = 25f;
+        float waitTime = 15f;
         float elapsedTime = 0f;
 
         while (elapsedTime < waitTime)
@@ -112,7 +112,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
                         Vector3 newPos = grabFoodPosition.position - grabFoodPosition.right * (i * stepDistance);
                         npcs[i].SetDestination(newPos);
                     }
-                    yield return new WaitForSeconds(5f);
+                    yield return new WaitForSeconds(2f);
 
                 }
                 isMoving = false;
@@ -245,6 +245,14 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         foreach (Transform child in cellDoors.transform)
         {
             child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, -90);
+        }
+    }
+
+    public void ResetAllNpcPositions()
+    {
+        foreach (var npc in allNpcs)
+        {
+            npc.OnPositionReset();
         }
     }
 }

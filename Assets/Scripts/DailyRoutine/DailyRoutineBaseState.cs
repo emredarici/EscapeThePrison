@@ -14,10 +14,10 @@ public class HeadcountState : DailyRoutineBaseState
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
         dailyRoutineManager.headcountPolice.SetActive(true);
+        dailyRoutineManager.ResetAllNpcPositions();
         dailyRoutineManager.PopulateNpcList();
         foreach (var npc in dailyRoutineManager.allNpcs)
         {
-
             if (npc.GetComponent<NavMeshAgent>().enabled == false)
                 npc.GetComponent<NavMeshAgent>().enabled = true;
         }
