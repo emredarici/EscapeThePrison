@@ -96,7 +96,7 @@ namespace Player
 
         private void OnSleepDetection()
         {
-            if (hasHit && currentHit.collider.CompareTag("Bed"))
+            if (hasHit && currentHit.collider.CompareTag("Bed") && DailyRoutineManager.Instance.dayTimeManager.IsDayTime(DayTimeManager.TimeOfDay.Night))
             {
                 DebugToolKit.Log("Sleep Trigger detected!");
                 PlayerAnimationHandler.Instance.SleepPlayer();

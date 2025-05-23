@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class DailyRoutineManager : Singleton<DailyRoutineManager>
 {
     public DayManager dayManager;
+    public DayTimeManager dayTimeManager;
     public DailyRoutineBaseState currentState;
     public HeadcountState headcountState = new HeadcountState();
     public ChowtimeState chowtimeState = new ChowtimeState();

@@ -24,6 +24,11 @@ public class DayTimeManager : MonoBehaviour
         UpdateDirectionalLight();
     }
 
+    public bool IsDayTime(TimeOfDay timeOfDay)
+    {
+        return currentTimeOfDay == timeOfDay;
+    }
+
     private void UpdateDirectionalLight()
     {
         switch (currentTimeOfDay)

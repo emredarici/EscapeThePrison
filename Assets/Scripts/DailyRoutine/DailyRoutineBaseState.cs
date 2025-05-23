@@ -13,6 +13,7 @@ public class HeadcountState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
+        dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Morning);
         dailyRoutineManager.headcountPolice.SetActive(true);
         dailyRoutineManager.ResetAllNpcPositions();
         dailyRoutineManager.PopulateNpcList();
@@ -48,6 +49,7 @@ public class ChowtimeState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
+        dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Afternoon);
         dailyRoutineManager.ArrangeQueue();
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Time to eat, all prisoners to the cafeteria!");
 
@@ -78,6 +80,7 @@ public class RectimeState : DailyRoutineBaseState
         {
             dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(30, dailyRoutineManager.bedtimeState));
         }
+        dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Evening);
     }
 
     public override void UpdateState(DailyRoutineManager dailyRoutineManager)
@@ -98,6 +101,7 @@ public class BedtimeState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
+        dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Night);
         if (dailyRoutineManager.dayManager.IsDay(Day.Day1))
         {
             if (UIManager.Instance.movementTrailer == null)
