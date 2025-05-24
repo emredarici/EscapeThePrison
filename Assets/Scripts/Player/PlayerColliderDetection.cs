@@ -9,7 +9,7 @@ namespace Player
         private IPlayerAnimationHandler animationHandler;
         private PlayerControls playerControls;
 
-        private int triggerCount = 0;
+        public int triggerCount = 0;
 
         private void Awake()
         {
@@ -61,6 +61,11 @@ namespace Player
 
                 if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
                 {
+                    if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3) && DailyRoutineManager.Instance.isThirdDayNPCDialouge == false)
+                    {
+                        DailyRoutineManager.Instance.thirdDayNPC.GetComponent<DialogueTrigger>().StartDialogue();
+                    }
+
                     if (triggerCount == 0)
                     {
                         VFXManager.Instance.DestroyMarker(2f);
@@ -80,6 +85,17 @@ namespace Player
                 if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState && DailyRoutineManager.Instance.lockPosition.activeSelf)
                 {
                     VFXManager.Instance.DestroyMarker();
+                }
+                if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.rectimeState)
+                {
+                    if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day2))
+                    {
+                        DailyRoutineManager.Instance.twoDayNPC.GetComponentInChildren<DialogueTrigger>().StartDialogue();
+                    }
+                    if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3))
+                    {
+                        DailyRoutineManager.Instance.thirdDay2NPC.GetComponentInChildren<DialogueTrigger>().StartDialogue();
+                    }
                 }
             }
         }

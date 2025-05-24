@@ -53,6 +53,13 @@ public class ChowtimeState : DailyRoutineBaseState
         dailyRoutineManager.ArrangeQueue();
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Time to eat, all prisoners to the cafeteria!");
 
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day3))
+        {
+            VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.thirdDayVFXPosition.position);
+            dailyRoutineManager.thirdDayNPC.SetActive(true);
+            dailyRoutineManager.isThirdDayNPCDialouge = false;
+        }
+
     }
 
     public override void UpdateState(DailyRoutineManager dailyRoutineManager)
@@ -80,6 +87,16 @@ public class RectimeState : DailyRoutineBaseState
         {
             dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(30, dailyRoutineManager.bedtimeState));
         }
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day2))
+        {
+            dailyRoutineManager.twoDayNPC.SetActive(true);
+            VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.twoDayVFXPosition.position);
+        }
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day3))
+        {
+            dailyRoutineManager.thirdDay2NPC.SetActive(true);
+            VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.thirdDay2VFXPosition.position);
+        }
         dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Evening);
     }
 
@@ -93,9 +110,16 @@ public class RectimeState : DailyRoutineBaseState
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Time to sleep, all prisoners to your cells!");
         dailyRoutineManager.lockPosition.SetActive(true);
         VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.lockPosition.transform.position);
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day2))
+        {
+            dailyRoutineManager.twoDayNPC.SetActive(false);
+        }
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day3))
+        {
+            dailyRoutineManager.thirdDay2NPC.SetActive(false);
+        }
     }
 }
-
 
 public class BedtimeState : DailyRoutineBaseState
 {
@@ -129,6 +153,4 @@ public class BedtimeState : DailyRoutineBaseState
         dailyRoutineManager.OpenAllCellDoors();
         UIManager.Instance.DeleteText(UIManager.Instance.informationText);
     }
-
-
 }

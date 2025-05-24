@@ -26,6 +26,14 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public GameObject headcountPolice;
     public Transform headcountPosition;
 
+    [Header("MainNpcs")]
+    public GameObject twoDayNPC;
+    public Transform twoDayVFXPosition;
+    public GameObject thirdDayNPC;
+    public GameObject thirdDay2NPC;
+    public Transform thirdDayVFXPosition;
+    public Transform thirdDay2VFXPosition;
+    [HideInInspector] public bool isThirdDayNPCDialouge = false;
 
     private float stepDistance = 2f;
 

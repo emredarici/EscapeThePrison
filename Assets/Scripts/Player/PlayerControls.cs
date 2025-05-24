@@ -61,6 +61,10 @@ namespace Player
                 HandleMovement();
                 HandleRotation();
             }
+            else
+            {
+                animationHandler.SetMovementSpeed(0.0f);
+            }
             ApplyGravity();
         }
 

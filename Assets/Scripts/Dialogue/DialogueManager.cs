@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Player;
+using Unity.VisualScripting;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI actorName;
     public TextMeshProUGUI messageText;
     public RectTransform backgroundBox;
+    public PlayerControls player;
 
     List<Message> cureentMessages;
     Actor[] currentActors;
@@ -22,6 +25,7 @@ public class DialogueManager : MonoBehaviour
         currentActors = actors;
         activeMessage = 0;
         isActive = true;
+        player.DisableInput();
 
         DebugToolKit.Log("Started conversation! Loaded messages: " + messages.Length);
         SplitLongMessages();
@@ -53,6 +57,28 @@ public class DialogueManager : MonoBehaviour
             DebugToolKit.Log("End of conversation!");
             backgroundBox.LeanScale(Vector3.zero, 0.5f).setEaseInOutExpo();
             isActive = false;
+            player.EnableInput();
+            if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day2))
+            {
+                DailyRoutineManager.Instance.StartCoroutine(DailyRoutineManager.Instance.CountdownSwitchState(7, DailyRoutineManager.Instance.bedtimeState));
+                VFXManager.Instance.DestroyMarker();
+            }
+            if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3))
+            {
+                if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
+                {
+                    player.gameObject.GetComponent<PlayerColliderDetection>().triggerCount = 0;
+                    DailyRoutineManager.Instance.isThirdDayNPCDialouge = true;
+                    DailyRoutineManager.Instance.thirdDayNPC.SetActive(false);
+                }
+                else if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.rectimeState)
+                {
+                    DailyRoutineManager.Instance.StartCoroutine(DailyRoutineManager.Instance.CountdownSwitchState(7, DailyRoutineManager.Instance.bedtimeState));
+
+                }
+                VFXManager.Instance.DestroyMarker();
+            }
+
         }
     }
 
@@ -83,7 +109,9 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         backgroundBox.transform.localScale = Vector3.zero;
+        player = FindObjectOfType<PlayerControls>();
     }
+
 
     void Update()
     {
