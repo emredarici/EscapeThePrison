@@ -8,6 +8,8 @@ public class MinigameManager : Singleton<MinigameManager>
     private IMinigame currentMinigame;
     public bool minigameActive = false;
 
+    public Key key;
+
     public void RegisterMinigame(string name, IMinigame minigame)
     {
         if (!minigames.ContainsKey(name))

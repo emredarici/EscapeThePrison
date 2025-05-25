@@ -10,7 +10,7 @@ public class Key : MonoBehaviour, ICollectible
         {
             IsCollected = true;
             Debug.Log("Key collected!");
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }

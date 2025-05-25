@@ -68,6 +68,7 @@ public class DialogueManager : MonoBehaviour
                 if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
                 {
                     player.gameObject.GetComponent<PlayerColliderDetection>().triggerCount = 0;
+                    MinigameManager.Instance.key.gameObject.SetActive(true);
                     DailyRoutineManager.Instance.isThirdDayNPCDialouge = true;
                     DailyRoutineManager.Instance.thirdDayNPC.SetActive(false);
                 }

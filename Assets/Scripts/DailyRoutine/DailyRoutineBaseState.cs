@@ -132,6 +132,10 @@ public class BedtimeState : DailyRoutineBaseState
             {
                 return;
             }
+            else
+            {
+                dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Morning);
+            }
             UIManager.Instance.movementTrailer.SetActive(true);
             dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(10f, dailyRoutineManager.headcountState));
         }

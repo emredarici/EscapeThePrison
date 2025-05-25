@@ -81,8 +81,10 @@ namespace Player
 
         private void OnMinigameDetection()
         {
-            if (hasHit && currentHit.collider.CompareTag("Door"))
+            if (hasHit && currentHit.collider.CompareTag("Door") && DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
             {
+                if (MinigameManager.Instance.key.IsCollected == false)
+                    return;
                 DebugToolKit.Log("Minigame Trigger detected!");
                 MinigameManager.Instance.RegisterMinigame("OpenDoor", GetComponent<OpenDoorMG>());
                 MinigameManager.Instance.StartMinigame("OpenDoor");
