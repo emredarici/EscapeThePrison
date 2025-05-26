@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Player;
-using Unity.VisualScripting;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -82,6 +80,7 @@ public class DialogueManager : MonoBehaviour
 
             if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4))
             {
+                player.gameObject.GetComponent<PlayerColliderDetection>().triggerCount = 0;
                 DailyRoutineManager.Instance.isFourDayNPCDialouge = true;
                 DailyRoutineManager.Instance.fourDayNPC.SetActive(false);
             }

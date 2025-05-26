@@ -87,10 +87,11 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
         if (minigameCamera != null && cinemachineCamera != null)
         {
             // Cinemachine kamerayı devre dışı bırak
+            minigameCamera.enabled = true;
             cinemachineCamera.enabled = false;
 
             // Mini oyun kamerasını etkinleştir
-            minigameCamera.enabled = true;
+
         }
     }
 
@@ -108,7 +109,7 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
 
     public void CameraShake()
     {
-        StartCoroutine(CameraShakeCoroutine(.2f, .1f));
+        StartCoroutine(CameraShakeCoroutine(.2f, .01f));
     }
 
     private IEnumerator CameraShakeCoroutine(float duration, float magnitude)
@@ -118,8 +119,8 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
 
         while (elapsed < duration)
         {
-            float offsetX = Random.Range(-1f, 1f) * magnitude;
-            float offsetY = Random.Range(-1f, 1f) * magnitude;
+            float offsetX = Random.Range(-.5f, 0.5f) * magnitude;
+            float offsetY = Random.Range(-.5f, .5f) * magnitude;
 
             minigameCamera.transform.localPosition = new Vector3(originalPosition.x + offsetX, originalPosition.y + offsetY, originalPosition.z);
 

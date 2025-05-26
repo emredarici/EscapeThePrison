@@ -17,13 +17,12 @@ public class MinigameManager : Singleton<MinigameManager>
         if (!minigames.ContainsKey(name))
         {
             minigames.Add(name, minigame);
+            Debug.Log($"Minigame '{name}' registered successfully.");
         }
     }
 
     void Start()
     {
-        RegisterMinigame("OpenDoor", GetComponent<OpenDoorMG>());
-        RegisterMinigame("BrakeDoor", GetComponent<BrakeDoorMG>());
     }
     void Update()
     {
@@ -47,7 +46,6 @@ public class MinigameManager : Singleton<MinigameManager>
     public void StopCurrentMinigame()
     {
         currentMinigame?.EndMinigame();
-        currentMinigame = null;
         minigameActive = false;
 
     }

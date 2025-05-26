@@ -103,6 +103,10 @@ public class RectimeState : DailyRoutineBaseState
             dailyRoutineManager.thirdDay2NPC.SetActive(true);
             VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.thirdDay2VFXPosition.position);
         }
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day4))
+        {
+            dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(20, dailyRoutineManager.bedtimeState));
+        }
         dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Evening);
     }
 
@@ -145,6 +149,7 @@ public class BedtimeState : DailyRoutineBaseState
             UIManager.Instance.movementTrailer.SetActive(true);
             dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(10f, dailyRoutineManager.headcountState));
         }
+
 
     }
 

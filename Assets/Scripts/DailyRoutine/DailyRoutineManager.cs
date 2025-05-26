@@ -19,6 +19,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public Transform grabFoodPosition;
     public List<Transform> exitPosition;
     public GameObject cellDoors;
+    public GameObject playerCellDoor;
     public GameObject mainDoor;
     public GameObject lockPosition;
     public GameObject policeRoomDoor;
@@ -54,6 +55,10 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     {
         currentState = bedtimeState;
         currentState.EnterState(this);
+        MinigameManager.Instance.RegisterMinigame("OpenDoor", DailyRoutineManager.Instance.gameObject.GetComponent<OpenDoorMG>());
+        MinigameManager.Instance.RegisterMinigame("BrakeDoor", DailyRoutineManager.Instance.gameObject.GetComponent<BrakeDoorMG>());
+
+
     }
 
     void Update()
@@ -260,6 +265,12 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         {
             child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, -90);
         }
+    }
+
+    public void OpenDoorMiniGame()
+    {
+        mainDoor.transform.position = new Vector3(-11.86f, 1.77f, 10.033f);
+        playerCellDoor.transform.localRotation *= Quaternion.Euler(playerCellDoor.transform.rotation.x, playerCellDoor.transform.rotation.y, 90);
     }
 
     public void ResetAllNpcPositions()

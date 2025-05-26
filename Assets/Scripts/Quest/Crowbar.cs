@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Crowbar : MonoBehaviour, ICollectible
 {
-    public bool IsCollected { get; private set; } = false;
+    public bool IsCollected = false;
 
     public void Collect()
     {
@@ -12,7 +12,6 @@ public class Crowbar : MonoBehaviour, ICollectible
             Debug.Log("Crowbar collected!");
             this.gameObject.SetActive(false); // Crowbar'ı gizle
             MinigameManager.Instance.RegisterMinigame("BrakeDoor", GetComponent<BrakeDoorMG>());
-
         }
     }
 }

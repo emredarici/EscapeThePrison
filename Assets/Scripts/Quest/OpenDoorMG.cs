@@ -40,8 +40,7 @@ public class OpenDoorMG : MonoBehaviour, IMinigame
         {
             miniGameMainUI.SetActive(false);
         });
-
-
+        DailyRoutineManager.Instance.OpenDoorMiniGame();
     }
 
     private void MoveInputArea()

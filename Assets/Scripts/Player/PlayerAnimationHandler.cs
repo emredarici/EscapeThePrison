@@ -88,7 +88,14 @@ namespace Player
                 }
                 UIManager.Instance.FadeCamera(true, 1.0f);
                 DailyRoutineManager.Instance.dayManager.NextDay();
-                DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.headcountState);
+                if (!DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
+                {
+                    DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.headcountState);
+                }
+                else
+                {
+                    DailyRoutineManager.Instance.ResetAllNpcPositions();
+                }
             });
         }
 

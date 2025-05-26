@@ -81,19 +81,24 @@ namespace Player
 
         private void OnMinigameDetection()
         {
-            if (hasHit && currentHit.collider.CompareTag("Door") && DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
+            if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
             {
-                if (MinigameManager.Instance.key.IsCollected == false)
-                    return;
-                DebugToolKit.Log("Minigame Trigger detected!");
-                MinigameManager.Instance.RegisterMinigame("OpenDoor", GetComponent<OpenDoorMG>());
-                MinigameManager.Instance.StartMinigame("OpenDoor");
+                if (hasHit && currentHit.collider.CompareTag("Door"))
+                {
+                    if (MinigameManager.Instance.key.IsCollected == false)
+                        return;
+                    DebugToolKit.Log("Open Door Minigame Trigger detected!");
+                    MinigameManager.Instance.StartMinigame("OpenDoor");
+                }
+                if (hasHit && currentHit.collider.CompareTag("BrakeDoor"))
+                {
+                    if (MinigameManager.Instance.crowbar.IsCollected == false)
+                        return;
+                    DebugToolKit.Log("Brake Door Minigame Trigger detected!");
+                    MinigameManager.Instance.StartMinigame("BrakeDoor");
+                }
             }
-            if (hasHit && currentHit.collider.CompareTag("BrakeDoor"))
-            {
-                DebugToolKit.Log("Minigame Trigger detected!");
-                MinigameManager.Instance.StartMinigame("BrakeDoor");
-            }
+
         }
 
         private void OnSleepDetection()

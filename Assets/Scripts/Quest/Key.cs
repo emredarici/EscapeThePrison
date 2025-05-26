@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Key : MonoBehaviour, ICollectible
 {
-    public bool IsCollected { get; private set; } = false;
+    public bool IsCollected = false;
 
     public void Collect()
     {
