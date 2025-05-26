@@ -21,6 +21,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public GameObject cellDoors;
     public GameObject mainDoor;
     public GameObject lockPosition;
+    public GameObject policeRoomDoor;
 
     [Header("Headcount")]
     public GameObject headcountPolice;
@@ -31,9 +32,13 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public Transform twoDayVFXPosition;
     public GameObject thirdDayNPC;
     public GameObject thirdDay2NPC;
+    public GameObject fourDayNPC;
+    public Transform fourDayVFXPosition;
     public Transform thirdDayVFXPosition;
     public Transform thirdDay2VFXPosition;
     [HideInInspector] public bool isThirdDayNPCDialouge = false;
+    [HideInInspector] public bool isFourDayNPCDialouge = false;
+    public GameObject policeRoomVFX;
 
     private float stepDistance = 2f;
 

@@ -9,6 +9,7 @@ namespace Player
         private IPlayerAnimationHandler animationHandler;
         private PlayerControls playerControls;
 
+        private bool canOpenPoliceDoor = false;
         public int triggerCount = 0;
 
         private void Awake()
@@ -30,6 +31,31 @@ namespace Player
             {
                 DailyRoutineManager.Instance.CloseAllCellDoors();
             }
+            if (other.CompareTag("PoliceRoomVFX"))
+            {
+                if (MinigameManager.Instance.policeRoomKey.IsCollected && canOpenPoliceDoor == false)
+                {
+                    canOpenPoliceDoor = true;
+                }
+                else if (MinigameManager.Instance.policeRoomKey.IsCollected && canOpenPoliceDoor == true)
+                {
+                    DailyRoutineManager.Instance.policeRoomDoor.transform.rotation = Quaternion.Euler(-90, 0, 0);
+                    canOpenPoliceDoor = false;
+                    if (MinigameManager.Instance.key.IsCollected && MinigameManager.Instance.crowbar.IsCollected)
+                    {
+                        other.gameObject.SetActive(false);
+                        DailyRoutineManager.Instance.fourDayNPC.SetActive(true);
+                        VFXManager.Instance.SpawnLocationMarker(DailyRoutineManager.Instance.fourDayVFXPosition.position);
+
+                    }
+                }
+                else if (!MinigameManager.Instance.policeRoomKey.IsCollected)
+                {
+                    UIManager.Instance.ChangeText(UIManager.Instance.informationText, "You need the Police Room Key to open this door.");
+                }
+
+            }
+
         }
 
         private void OnTriggerExit(Collider other)
@@ -46,6 +72,10 @@ namespace Player
             if (currentCollectible != null && PlayerRaycastHandler.Instance.interactionControl.action.triggered)
             {
                 CollectItem();
+            }
+            if (canOpenPoliceDoor && PlayerRaycastHandler.Instance.interactionControl.action.triggered)
+            {
+                DailyRoutineManager.Instance.policeRoomDoor.transform.rotation = Quaternion.Euler(-90, 90, 0);
             }
         }
 
@@ -64,6 +94,10 @@ namespace Player
                     if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3) && DailyRoutineManager.Instance.isThirdDayNPCDialouge == false)
                     {
                         DailyRoutineManager.Instance.thirdDayNPC.GetComponent<DialogueTrigger>().StartDialogue();
+                    }
+                    if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4) && DailyRoutineManager.Instance.isFourDayNPCDialouge == false)
+                    {
+                        DailyRoutineManager.Instance.fourDayNPC.GetComponent<DialogueTrigger>().StartDialogue();
                     }
 
                     if (triggerCount == 0)

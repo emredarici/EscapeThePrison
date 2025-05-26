@@ -12,6 +12,7 @@ TagManager:
   - CafetariaTable
   - NPC
   - Lock
+  - PoliceRoomVFX
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,8 @@ public class MinigameManager : Singleton<MinigameManager>
     public bool minigameActive = false;
 
     public Key key;
+    public PoliceRoomKey policeRoomKey;
+    public Crowbar crowbar;
 
     public void RegisterMinigame(string name, IMinigame minigame)
     {

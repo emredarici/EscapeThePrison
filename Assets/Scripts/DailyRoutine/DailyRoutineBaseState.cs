@@ -59,6 +59,12 @@ public class ChowtimeState : DailyRoutineBaseState
             dailyRoutineManager.thirdDayNPC.SetActive(true);
             dailyRoutineManager.isThirdDayNPCDialouge = false;
         }
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day4))
+        {
+            dailyRoutineManager.policeRoomVFX.SetActive(true);
+            MinigameManager.Instance.key.gameObject.SetActive(true);
+            MinigameManager.Instance.crowbar.gameObject.SetActive(true);
+        }
 
     }
 

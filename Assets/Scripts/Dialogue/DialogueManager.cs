@@ -68,7 +68,7 @@ public class DialogueManager : MonoBehaviour
                 if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
                 {
                     player.gameObject.GetComponent<PlayerColliderDetection>().triggerCount = 0;
-                    MinigameManager.Instance.key.gameObject.SetActive(true);
+                    MinigameManager.Instance.policeRoomKey.gameObject.SetActive(true);
                     DailyRoutineManager.Instance.isThirdDayNPCDialouge = true;
                     DailyRoutineManager.Instance.thirdDayNPC.SetActive(false);
                 }
@@ -78,6 +78,12 @@ public class DialogueManager : MonoBehaviour
 
                 }
                 VFXManager.Instance.DestroyMarker();
+            }
+
+            if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4))
+            {
+                DailyRoutineManager.Instance.isFourDayNPCDialouge = true;
+                DailyRoutineManager.Instance.fourDayNPC.SetActive(false);
             }
 
         }
