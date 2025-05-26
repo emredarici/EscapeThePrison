@@ -83,6 +83,7 @@ public class DialogueManager : MonoBehaviour
                 player.gameObject.GetComponent<PlayerColliderDetection>().triggerCount = 0;
                 DailyRoutineManager.Instance.isFourDayNPCDialouge = true;
                 DailyRoutineManager.Instance.fourDayNPC.SetActive(false);
+                VFXManager.Instance.DestroyMarker();
             }
 
         }
