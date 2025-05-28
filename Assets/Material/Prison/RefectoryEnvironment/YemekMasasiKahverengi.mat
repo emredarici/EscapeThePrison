@@ -37,7 +37,7 @@ Material:
     - _SpecularStep: 0
     - _SpecularStepSmooth: 0
     m_Colors:
-    - _BaseColor: {r: 0.3679245, g: 0.29161388, b: 0.16834283, a: 1}
+    - _BaseColor: {r: 1, g: 0.60784316, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
