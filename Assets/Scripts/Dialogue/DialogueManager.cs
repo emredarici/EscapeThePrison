@@ -40,6 +40,7 @@ public class DialogueManager : MonoBehaviour
         actorImage.sprite = actorToDisplay.sprite;
         actorName.text = actorToDisplay.name;
 
+        AudioManager.Instance.PlayAudio(player.GetComponent<AudioSource>(), AudioManager.Instance.talkSource);
         AnimateTextColor();
     }
 
@@ -56,6 +57,7 @@ public class DialogueManager : MonoBehaviour
             backgroundBox.LeanScale(Vector3.zero, 0.5f).setEaseInOutExpo();
             isActive = false;
             player.EnableInput();
+            AudioManager.Instance.StopAudio(player.GetComponent<AudioSource>());
             if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day2))
             {
                 DailyRoutineManager.Instance.StartCoroutine(DailyRoutineManager.Instance.CountdownSwitchState(7, DailyRoutineManager.Instance.bedtimeState));

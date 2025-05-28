@@ -12,6 +12,7 @@ namespace Player
         private CapsuleCollider capsuleCollider;
         private Transform cameraMainTransform;
         public Transform startPosition;
+        private AudioSource audioSource;
 
         [SerializeField] private float playerSpeed = 5.0f;
         [SerializeField] private float runningSpeed = 8.0f;
@@ -26,6 +27,7 @@ namespace Player
 
         private void Awake()
         {
+            audioSource = GetComponent<AudioSource>();
             capsuleCollider = GetComponent<CapsuleCollider>();
             controller = GetComponent<CharacterController>();
             animationHandler = GetComponent<IPlayerAnimationHandler>();
@@ -109,10 +111,13 @@ namespace Player
 
                 float speedValue = isRunning ? 1.0f : 0.5f;
                 animationHandler.SetMovementSpeed(speedValue);
+                if (!audioSource.isPlaying)
+                    AudioManager.Instance.PlayAudio(audioSource, AudioManager.Instance.walkSource);
             }
             else
             {
                 animationHandler.SetMovementSpeed(0.0f);
+                AudioManager.Instance.StopAudio(audioSource);
             }
         }
 

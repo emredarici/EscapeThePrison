@@ -9,6 +9,7 @@ public class NPCController : MonoBehaviour
     [HideInInspector] public Transform targetExitPosition;
     public NPCState currentState;
     public Animator animator;
+    public AudioSource audioSource;
 
     public bool hasRandomStateSet = false;
 
@@ -16,6 +17,7 @@ public class NPCController : MonoBehaviour
     {
         agent = this.GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetState(NPCState newState)
@@ -61,6 +63,7 @@ public class NPCController : MonoBehaviour
     public void MoveTo(Vector3 destination, System.Action onArrived)
     {
         agent.SetDestination(destination);
+        AudioManager.Instance.PlayAmbience(audioSource, AudioManager.Instance.walkSource);
         StartCoroutine(WaitUntilArrived(onArrived));
     }
 
@@ -75,7 +78,7 @@ public class NPCController : MonoBehaviour
         {
             animator.SetBool("Walking", false);
         }
-
+        AudioManager.Instance.StopAudio(audioSource);
 
         onArrived?.Invoke();
     }

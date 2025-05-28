@@ -50,6 +50,7 @@ public class ChowtimeState : DailyRoutineBaseState
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
         dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Afternoon);
+        AudioManager.Instance.PlayAmbience(dailyRoutineManager.chowtimeSource, AudioManager.Instance.chowtimeSource);
         dailyRoutineManager.ArrangeQueue();
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Time to eat, all prisoners to the cafeteria!");
 
@@ -76,6 +77,7 @@ public class ChowtimeState : DailyRoutineBaseState
     public override void ExitState(DailyRoutineManager dailyRoutineManager)
     {
         UIManager.Instance.DeleteText(UIManager.Instance.informationText);
+        AudioManager.Instance.StopAudio(dailyRoutineManager.chowtimeSource);
     }
 
 
@@ -85,6 +87,7 @@ public class RectimeState : DailyRoutineBaseState
 {
     public override void EnterState(DailyRoutineManager dailyRoutineManager)
     {
+        AudioManager.Instance.PlayAmbience(dailyRoutineManager.rectimeSource, AudioManager.Instance.recTimeSource);
         foreach (var npc in dailyRoutineManager.allNpcs)
         {
             npc.RectimeStateNPC();
@@ -118,6 +121,7 @@ public class RectimeState : DailyRoutineBaseState
     public override void ExitState(DailyRoutineManager dailyRoutineManager)
     {
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Time to sleep, all prisoners to your cells!");
+        AudioManager.Instance.StopAudio(dailyRoutineManager.rectimeSource);
         dailyRoutineManager.lockPosition.SetActive(true);
         VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.lockPosition.transform.position);
         if (dailyRoutineManager.dayManager.IsDay(Day.Day2))

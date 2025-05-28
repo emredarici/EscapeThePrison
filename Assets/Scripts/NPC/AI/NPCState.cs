@@ -56,6 +56,7 @@ public class IdleState : NPCState
     public override void Enter()
     {
         this.npc.agent.enabled = true;
+        AudioManager.Instance.StopAudio(npc.myCell.audioSource);
     }
 
     public override void Update()
@@ -90,6 +91,7 @@ public class SleepingState : NPCState
     {
         npc.agent.enabled = false;
         npc.animator.SetBool("isSleeping", true);
+        AudioManager.Instance.PlayAudio(npc.myCell.audioSource, AudioManager.Instance.sleepSource);
         if (HasWaited(15, 20))
         {
             if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
@@ -126,7 +128,7 @@ public class LookingOutsideState : NPCState
     public override void Enter()
     {
         base.Enter();
-        npc.MoveTo(target.position, () => DebugToolKit.Log("LookOutside"));
+        npc.MoveTo(target.position, () => LookSideRoutine());
     }
 
     public override void Update()
@@ -138,6 +140,12 @@ public class LookingOutsideState : NPCState
             else
                 return;
         }
+    }
+
+    void LookSideRoutine()
+    {
+        if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
+            AudioManager.Instance.PlayAudio(npc.myCell.audioSource, AudioManager.Instance.talkSource[Random.Range(0, AudioManager.Instance.talkSource.Length)]);
     }
 }
 
@@ -153,7 +161,7 @@ public class ToiletState : NPCState
     public override void Enter()
     {
         base.Enter();
-        npc.MoveTo(target.position, () => DebugToolKit.Log("Sit"));
+        npc.MoveTo(target.position, () => ToiletSoundRoutine());
     }
 
     public override void Update()
@@ -165,6 +173,12 @@ public class ToiletState : NPCState
             else
                 return;
         }
+    }
+
+    void ToiletSoundRoutine()
+    {
+        if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState)
+            AudioManager.Instance.PlayAudio(npc.myCell.audioSource, AudioManager.Instance.toiletSource);
     }
 }
 

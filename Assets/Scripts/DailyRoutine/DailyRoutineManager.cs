@@ -41,6 +41,10 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     [HideInInspector] public bool isFourDayNPCDialouge = false;
     public GameObject policeRoomVFX;
 
+    [Header("AudioSources")]
+    public AudioSource rectimeSource;
+    public AudioSource chowtimeSource;
+
     private float stepDistance = 2f;
 
     [HideInInspector] public bool isMoving = false;
@@ -200,9 +204,11 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
 
     private IEnumerator PlayerHeadCountCoroutine()
     {
+        AudioManager.Instance.PlayAudio(headcountPolice.GetComponent<AudioSource>(), AudioManager.Instance.talkSource);
         yield return new WaitForSeconds(8f);
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, $"Attendance confirmed. Headcount: {npcs.Count + 1}.");
         DebugToolKit.Log("Player headcount confirmed.");
+        AudioManager.Instance.StopAudio(headcountPolice.GetComponent<AudioSource>());
         yield return new WaitForSeconds(5f);
         this.SwitchState(chowtimeState);
     }
