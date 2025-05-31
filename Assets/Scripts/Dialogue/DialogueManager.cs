@@ -61,7 +61,7 @@ public class DialogueManager : MonoBehaviour
             if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day2))
             {
                 DailyRoutineManager.Instance.StartCoroutine(DailyRoutineManager.Instance.CountdownSwitchState(7, DailyRoutineManager.Instance.bedtimeState));
-                VFXManager.Instance.DestroyMarker();
+                VFXManager.Instance.DestroyDialogueMarker();
             }
             if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3))
             {
@@ -71,13 +71,14 @@ public class DialogueManager : MonoBehaviour
                     MinigameManager.Instance.policeRoomKey.gameObject.SetActive(true);
                     DailyRoutineManager.Instance.isThirdDayNPCDialouge = true;
                     DailyRoutineManager.Instance.thirdDayNPC.SetActive(false);
+                    DailyRoutineManager.Instance.isEatFood = true;
                 }
                 else if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.rectimeState)
                 {
                     DailyRoutineManager.Instance.StartCoroutine(DailyRoutineManager.Instance.CountdownSwitchState(7, DailyRoutineManager.Instance.bedtimeState));
 
                 }
-                VFXManager.Instance.DestroyMarker();
+                VFXManager.Instance.DestroyDialogueMarker();
             }
 
             if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4))
@@ -85,7 +86,8 @@ public class DialogueManager : MonoBehaviour
                 player.gameObject.GetComponent<PlayerColliderDetection>().triggerCount = 0;
                 DailyRoutineManager.Instance.isFourDayNPCDialouge = true;
                 DailyRoutineManager.Instance.fourDayNPC.SetActive(false);
-                VFXManager.Instance.DestroyMarker();
+                DailyRoutineManager.Instance.isEatFood = true;
+                VFXManager.Instance.DestroyDialogueMarker();
             }
 
         }

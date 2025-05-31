@@ -13,6 +13,7 @@ TagManager:
   - NPC
   - Lock
   - PoliceRoomVFX
+  - DialogueMarkerVFX
   layers:
   - Default
   - TransparentFX

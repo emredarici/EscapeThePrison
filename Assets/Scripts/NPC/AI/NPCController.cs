@@ -24,11 +24,11 @@ public class NPCController : MonoBehaviour
     {
         if (currentState != null)
         {
-            currentState.Exit(); // Mevcut durumdan çık
+            currentState.Exit();
         }
 
         currentState = newState;
-        currentState.Enter(); // Yeni duruma gir
+        currentState.Enter();
     }
 
     public void OnPositionReset()
@@ -63,7 +63,6 @@ public class NPCController : MonoBehaviour
     public void MoveTo(Vector3 destination, System.Action onArrived)
     {
         agent.SetDestination(destination);
-        AudioManager.Instance.PlayAmbience(audioSource, AudioManager.Instance.walkSource);
         StartCoroutine(WaitUntilArrived(onArrived));
     }
 
@@ -78,7 +77,7 @@ public class NPCController : MonoBehaviour
         {
             animator.SetBool("Walking", false);
         }
-        AudioManager.Instance.StopAudio(audioSource);
+
 
         onArrived?.Invoke();
     }

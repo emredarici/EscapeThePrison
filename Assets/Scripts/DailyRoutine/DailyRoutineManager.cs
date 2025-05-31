@@ -39,6 +39,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public Transform thirdDay2VFXPosition;
     [HideInInspector] public bool isThirdDayNPCDialouge = false;
     [HideInInspector] public bool isFourDayNPCDialouge = false;
+    [HideInInspector] public bool isEatFood = false;
     public GameObject policeRoomVFX;
 
     [Header("AudioSources")]

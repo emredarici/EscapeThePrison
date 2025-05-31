@@ -54,9 +54,13 @@ public class ChowtimeState : DailyRoutineBaseState
         dailyRoutineManager.ArrangeQueue();
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Time to eat, all prisoners to the cafeteria!");
 
+        if (dailyRoutineManager.dayManager.IsDay(Day.Day1) || dailyRoutineManager.dayManager.IsDay(Day.Day2))
+        {
+            dailyRoutineManager.isEatFood = true;
+        }
         if (dailyRoutineManager.dayManager.IsDay(Day.Day3))
         {
-            VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.thirdDayVFXPosition.position);
+            VFXManager.Instance.SpawnDialogueMarker(dailyRoutineManager.thirdDayVFXPosition.position);
             dailyRoutineManager.thirdDayNPC.SetActive(true);
             dailyRoutineManager.isThirdDayNPCDialouge = false;
         }
@@ -78,6 +82,7 @@ public class ChowtimeState : DailyRoutineBaseState
     {
         UIManager.Instance.DeleteText(UIManager.Instance.informationText);
         AudioManager.Instance.StopAudio(dailyRoutineManager.chowtimeSource);
+        dailyRoutineManager.isEatFood = false;
     }
 
 
@@ -99,12 +104,12 @@ public class RectimeState : DailyRoutineBaseState
         if (dailyRoutineManager.dayManager.IsDay(Day.Day2))
         {
             dailyRoutineManager.twoDayNPC.SetActive(true);
-            VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.twoDayVFXPosition.position);
+            VFXManager.Instance.SpawnDialogueMarker(dailyRoutineManager.twoDayVFXPosition.position);
         }
         if (dailyRoutineManager.dayManager.IsDay(Day.Day3))
         {
             dailyRoutineManager.thirdDay2NPC.SetActive(true);
-            VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.thirdDay2VFXPosition.position);
+            VFXManager.Instance.SpawnDialogueMarker(dailyRoutineManager.thirdDay2VFXPosition.position);
         }
         if (dailyRoutineManager.dayManager.IsDay(Day.Day4))
         {

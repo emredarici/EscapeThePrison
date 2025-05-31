@@ -4033,6 +4033,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 883a7868a09b566499918fbb3e0609a3, type: 2}
   - {fileID: 11400000, guid: 0e06714c6051da94cb4668a899408e56, type: 2}
   - {fileID: 11400000, guid: b240b7d48760f8641be003f0a38844b4, type: 2}
+--- !u!114 &195359373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195359354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb4c0a1624096747a3a69549b8f8fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &195413581 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 90a28694eae83154496e114a4f721f46,
@@ -38179,6 +38191,12 @@ PrefabInstance:
       propertyPath: movementTrailer
       value: 
       objectReference: {fileID: 627782580}
+    - target: {fileID: 3358594731894941145, guid: bf58ab63151ba7c4ea4c306abf17cd75,
+        type: 3}
+      propertyPath: dialogueMarkerPrefab
+      value: 
+      objectReference: {fileID: 7823327091382468809, guid: f90f2863d3be4474381932cd8e80d53f,
+        type: 3}
     - target: {fileID: 4590787653377816990, guid: bf58ab63151ba7c4ea4c306abf17cd75,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -38407,6 +38425,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 195359365}
+    - targetCorrespondingSourceObject: {fileID: 5063399546860561918, guid: bf58ab63151ba7c4ea4c306abf17cd75,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 195359373}
   m_SourcePrefab: {fileID: 100100000, guid: bf58ab63151ba7c4ea4c306abf17cd75, type: 3}
 --- !u!1001 &2129645445
 PrefabInstance:

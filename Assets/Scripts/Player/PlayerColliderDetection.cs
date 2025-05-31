@@ -21,6 +21,7 @@ namespace Player
         private void OnTriggerEnter(Collider other)
         {
             HandleLocationMarker(other);
+            HandleDialogueMarker(other);
 
             if (other.TryGetComponent<ICollectible>(out var collectible))
             {
@@ -45,7 +46,7 @@ namespace Player
                     {
                         other.gameObject.SetActive(false);
                         DailyRoutineManager.Instance.fourDayNPC.SetActive(true);
-                        VFXManager.Instance.SpawnLocationMarker(DailyRoutineManager.Instance.fourDayVFXPosition.position);
+                        VFXManager.Instance.SpawnDialogueMarker(DailyRoutineManager.Instance.fourDayVFXPosition.position);
 
                     }
                 }
@@ -91,6 +92,39 @@ namespace Player
 
                 if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
                 {
+                    if (DailyRoutineManager.Instance.isEatFood == true)
+                    {
+                        if (triggerCount == 0)
+                        {
+                            VFXManager.Instance.DestroyMarker(0f);
+                            VFXManager.Instance.SpawnLocationMarker(DailyRoutineManager.Instance.PlayerRandomTablePosition().position);
+                        }
+
+                        if (triggerCount > 0)
+                        {
+                            VFXManager.Instance.DestroyMarker(2f);
+                            DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.rectimeState);
+                            triggerCount = 0;
+                            return;
+                        }
+                        triggerCount++;
+                    }
+                }
+
+                if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState && DailyRoutineManager.Instance.lockPosition.activeSelf)
+                {
+                    VFXManager.Instance.DestroyMarker();
+                }
+            }
+        }
+
+        private void HandleDialogueMarker(Collider other)
+        {
+            if (other.CompareTag("DialogueMarkerVFX"))
+            {
+                DebugToolKit.Log("Player entered the dialogue marker trigger zone.");
+                if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
+                {
                     if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3) && DailyRoutineManager.Instance.isThirdDayNPCDialouge == false)
                     {
                         DailyRoutineManager.Instance.thirdDayNPC.GetComponent<DialogueTrigger>().StartDialogue();
@@ -99,26 +133,6 @@ namespace Player
                     {
                         DailyRoutineManager.Instance.fourDayNPC.GetComponent<DialogueTrigger>().StartDialogue();
                     }
-
-                    if (triggerCount == 0)
-                    {
-                        VFXManager.Instance.DestroyMarker(2f);
-                        VFXManager.Instance.SpawnLocationMarker(DailyRoutineManager.Instance.PlayerRandomTablePosition().position);
-                    }
-
-                    if (triggerCount > 0)
-                    {
-                        VFXManager.Instance.DestroyMarker(2f);
-                        DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.rectimeState);
-                        triggerCount = 0;
-                        return;
-                    }
-                    triggerCount++;
-                }
-
-                if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.bedtimeState && DailyRoutineManager.Instance.lockPosition.activeSelf)
-                {
-                    VFXManager.Instance.DestroyMarker();
                 }
                 if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.rectimeState)
                 {
