@@ -6,6 +6,7 @@ public class AudioManager : Singleton<AudioManager>
 {
     [Header("Walk SFX")]
     public AudioData walkSource;
+    public AudioData runSource;
 
     [Header("Cell SFX")]
     public AudioData[] toiletSource;
@@ -20,9 +21,13 @@ public class AudioManager : Singleton<AudioManager>
     [Header("Ambience")]
     public AudioData chowtimeSource;
     public AudioData recTimeSource;
+    public AudioData bedtimeSource;
 
     [Header("Eating SFX")]
     public AudioData[] eatingSource;
+
+    [Header("Minigame SFX")]
+    public AudioData[] minigameSource;
 
     public void PlayAudio(AudioSource source, AudioData data)
     {
@@ -39,6 +44,14 @@ public class AudioManager : Singleton<AudioManager>
 
         int randomIndex = Random.Range(0, dataArray.Length);
         PlayAudio(source, dataArray[randomIndex]);
+    }
+
+    public void PlayAudio(AudioSource source, AudioData[] dataArray, int dataIndex)
+    {
+        if (source == null || dataArray == null || dataArray.Length <= dataIndex || dataIndex < 0)
+            return;
+
+        PlayAudio(source, dataArray[dataIndex]);
     }
 
     public void StopAudio(AudioSource source)

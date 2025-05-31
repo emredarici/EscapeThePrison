@@ -149,9 +149,14 @@ public class BedtimeState : DailyRoutineBaseState
             else
             {
                 dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Morning);
+                UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Welcome to the prison, please follow the instructions on the screen.");
             }
             UIManager.Instance.movementTrailer.SetActive(true);
             dailyRoutineManager.StartCoroutine(dailyRoutineManager.CountdownSwitchState(10f, dailyRoutineManager.headcountState));
+        }
+        if (!dailyRoutineManager.dayManager.IsDay(Day.Day5))
+        {
+            AudioManager.Instance.PlayAmbience(dailyRoutineManager.bedtimeSource, AudioManager.Instance.bedtimeSource);
         }
 
 
@@ -170,6 +175,10 @@ public class BedtimeState : DailyRoutineBaseState
             Object.Destroy(UIManager.Instance.movementTrailer);
         }
         dailyRoutineManager.OpenAllCellDoors();
+        if (dailyRoutineManager.currentState != dailyRoutineManager.headcountState)
+        {
+            AudioManager.Instance.StopAudio(dailyRoutineManager.bedtimeSource);
+        }
         UIManager.Instance.DeleteText(UIManager.Instance.informationText);
     }
 }

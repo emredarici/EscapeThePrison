@@ -26,7 +26,7 @@ public class OpenDoorMG : MonoBehaviour, IMinigame
         miniGameMainUI.SetActive(true);
         miniGameMainUI.transform.localScale = Vector3.zero;
         LeanTween.scale(miniGameMainUI, Vector3.one, 0.5f).setEase(LeanTweenType.easeOutBack);
-
+        AudioManager.Instance.PlayAudio(MinigameManager.Instance.opendoorAudioSource, AudioManager.Instance.minigameSource, 0);
         MoveInputArea();
     }
 
@@ -72,11 +72,13 @@ public class OpenDoorMG : MonoBehaviour, IMinigame
             if (RectTransformUtility.RectangleContainsScreenPoint(miniGameGreenAreaRect, miniGameInputAreaRect.position))
             {
                 score++;
+                AudioManager.Instance.PlayAudio(MinigameManager.Instance.opendoorAudioSource, AudioManager.Instance.minigameSource, 1);
                 DebugToolKit.Log($"Score: {score}");
                 miniGameScoreText.text = "Security Bypass: " + score + " / " + 5;
                 if (score >= 5)
                 {
                     MinigameManager.Instance.StopCurrentMinigame();
+                    UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Security Bypass Completed! Escaped through the back door of the cafeteria.");
                     DebugToolKit.Log("Minigame Completed!");
                 }
             }

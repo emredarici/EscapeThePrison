@@ -95,6 +95,7 @@ namespace Player
                 else
                 {
                     DailyRoutineManager.Instance.ResetAllNpcPositions();
+                    UIManager.Instance.DeleteText(UIManager.Instance.informationText);
                 }
             });
         }

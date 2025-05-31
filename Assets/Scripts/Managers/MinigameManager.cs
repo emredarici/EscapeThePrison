@@ -11,6 +11,7 @@ public class MinigameManager : Singleton<MinigameManager>
     public Key key;
     public PoliceRoomKey policeRoomKey;
     public Crowbar crowbar;
+    public AudioSource opendoorAudioSource;
 
     public void RegisterMinigame(string name, IMinigame minigame)
     {
@@ -28,6 +29,7 @@ public class MinigameManager : Singleton<MinigameManager>
     {
         if (minigameActive && Input.GetKeyDown(KeyCode.Escape))
         {
+            AudioManager.Instance.PlayAudio(opendoorAudioSource, AudioManager.Instance.minigameSource, 2);
             StopCurrentMinigame();
         }
     }

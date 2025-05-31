@@ -44,6 +44,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     [Header("AudioSources")]
     public AudioSource rectimeSource;
     public AudioSource chowtimeSource;
+    public AudioSource bedtimeSource;
 
     private float stepDistance = 2f;
 

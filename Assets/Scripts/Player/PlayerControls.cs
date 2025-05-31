@@ -112,7 +112,12 @@ namespace Player
                 float speedValue = isRunning ? 1.0f : 0.5f;
                 animationHandler.SetMovementSpeed(speedValue);
                 if (!audioSource.isPlaying)
-                    AudioManager.Instance.PlayAudio(audioSource, AudioManager.Instance.walkSource);
+                {
+                    if (isRunning)
+                        AudioManager.Instance.PlayAudio(audioSource, AudioManager.Instance.runSource);
+                    else
+                        AudioManager.Instance.PlayAudio(audioSource, AudioManager.Instance.walkSource);
+                }
             }
             else
             {
