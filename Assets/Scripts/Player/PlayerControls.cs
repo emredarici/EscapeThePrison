@@ -12,7 +12,7 @@ namespace Player
         private CapsuleCollider capsuleCollider;
         private Transform cameraMainTransform;
         public Transform startPosition;
-        private AudioSource audioSource;
+        [HideInInspector] public AudioSource audioSource;
 
         [SerializeField] private float playerSpeed = 5.0f;
         [SerializeField] private float runningSpeed = 8.0f;
@@ -73,6 +73,8 @@ namespace Player
         public void DisableInput()
         {
             Debug.Log("Input Disabled");
+            AudioManager.Instance.StopAudio(audioSource);
+            PlayerAnimationHandler.Instance.SetMovementSpeed(0.0f);
             isInputEnabled = false;
         }
 
@@ -111,13 +113,8 @@ namespace Player
 
                 float speedValue = isRunning ? 1.0f : 0.5f;
                 animationHandler.SetMovementSpeed(speedValue);
-                if (!audioSource.isPlaying)
-                {
-                    if (isRunning)
-                        AudioManager.Instance.PlayAudio(audioSource, AudioManager.Instance.runSource);
-                    else
-                        AudioManager.Instance.PlayAudio(audioSource, AudioManager.Instance.walkSource);
-                }
+                AudioData desiredAudio = isRunning ? AudioManager.Instance.runSource : AudioManager.Instance.walkSource;
+                AudioManager.Instance.PlayLoopingAudio(desiredAudio, audioSource);
             }
             else
             {

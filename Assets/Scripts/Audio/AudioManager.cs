@@ -11,6 +11,7 @@ public class AudioManager : Singleton<AudioManager>
     [Header("Cell SFX")]
     public AudioData[] toiletSource;
     public AudioData sleepSource;
+    public AudioData[] doorSource;
 
     [Header("Talks")]
     public AudioData[] talkSource;
@@ -28,6 +29,10 @@ public class AudioManager : Singleton<AudioManager>
 
     [Header("Minigame SFX")]
     public AudioData[] minigameSource;
+    public AudioData[] brakeDoorminigameSource;
+
+    [Header("Other SFX")]
+    public AudioData[] colletSouce;
 
     public void PlayAudio(AudioSource source, AudioData data)
     {
@@ -71,5 +76,30 @@ public class AudioManager : Singleton<AudioManager>
         source.volume = data.volume;
         source.loop = true;
         source.Play();
+    }
+
+
+    public void PlayLoopingAudio(AudioData data, AudioSource audioSource)
+    {
+        if (audioSource == null || data == null || data.clip == null)
+            return;
+
+        if (audioSource.clip == data.clip && audioSource.isPlaying)
+            return;
+
+        audioSource.clip = data.clip;
+        audioSource.volume = data.volume;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
+    public void StopLoopingAudio(AudioSource audioSource)
+    {
+        if (audioSource == null || !audioSource.isPlaying)
+            return;
+        {
+            audioSource.Stop();
+            audioSource.clip = null;
+        }
     }
 }

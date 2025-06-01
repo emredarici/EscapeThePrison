@@ -26,6 +26,7 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
         // Karakter kontrolünü devre dışı bırak
         player.GetComponent<CharacterController>().enabled = false;
         playerControls.movementControl.action.Disable();
+        playerControls.DisableInput();
 
         // Karakteri kapının yanına taşı
         playerControls.gameObject.transform.position = new Vector3(door.transform.position.x + 1.20f, playerControls.gameObject.transform.position.y, playerControls.gameObject.transform.position.z);
@@ -38,6 +39,7 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
 
         IsGameRunning = true;
         hitCount = 0; // Sayaç sıfırlanır
+        UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Press Space to hit the door with the crowbar.");
     }
 
     public void EndMinigame()
@@ -47,6 +49,7 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
         // Hareket kontrolünü etkinleştir
         playerControls.movementControl.action.Enable();
         player.GetComponent<CharacterController>().enabled = true;
+        playerControls.EnableInput();
 
         // Crowbar nesnesini gizle
         CrowbarObject.SetActive(false);
@@ -56,6 +59,7 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
 
         IsGameRunning = false;
         MinigameManager.Instance.minigameActive = false;
+        UIManager.Instance.DeleteText(UIManager.Instance.informationText);
     }
 
     private void Update()
@@ -71,13 +75,15 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
         PlayerAnimationHandler.Instance.PlayHittingAnimation(() =>
         {
             hitCount++;
-            Debug.Log($"Door hit count: {hitCount}");
-
 
             if (hitCount >= maxHits)
             {
                 Destroy(door);
                 EndMinigame();
+            }
+            else
+            {
+                UIManager.Instance.ChangeText(UIManager.Instance.informationText, $"Door hit count: {hitCount} / {maxHits}");
             }
         });
     }
@@ -110,6 +116,7 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
     public void CameraShake()
     {
         StartCoroutine(CameraShakeCoroutine(.2f, .01f));
+        MiniGameAudio();
     }
 
     private IEnumerator CameraShakeCoroutine(float duration, float magnitude)
@@ -131,5 +138,27 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
 
         // Kamera pozisyonunu sıfırla
         minigameCamera.transform.localPosition = originalPosition;
+    }
+
+    public void MiniGameAudio()
+    {
+        switch (hitCount)
+        {
+            case 0:
+                AudioManager.Instance.PlayAudio(MinigameManager.Instance.brakedoorAudioSource, AudioManager.Instance.brakeDoorminigameSource, 0);
+                break;
+            case 1:
+                AudioManager.Instance.PlayAudio(MinigameManager.Instance.brakedoorAudioSource, AudioManager.Instance.brakeDoorminigameSource, 1);
+                break;
+            case 2:
+                AudioManager.Instance.PlayAudio(MinigameManager.Instance.brakedoorAudioSource, AudioManager.Instance.brakeDoorminigameSource, 2);
+                break;
+            case 3:
+                AudioManager.Instance.PlayAudio(MinigameManager.Instance.brakedoorAudioSource, AudioManager.Instance.brakeDoorminigameSource, 3);
+                break;
+            case 4:
+                AudioManager.Instance.PlayAudio(MinigameManager.Instance.brakedoorAudioSource, AudioManager.Instance.brakeDoorminigameSource, 4);
+                break;
+        }
     }
 }

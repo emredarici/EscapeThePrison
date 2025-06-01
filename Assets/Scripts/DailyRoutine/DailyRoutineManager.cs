@@ -259,6 +259,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public void OpenAllCellDoors()
     {
         mainDoor.transform.position = new Vector3(-11.86f, 1.77f, 10.033f);
+        AudioManager.Instance.PlayAudio(MinigameManager.Instance.opendoorAudioSource, AudioManager.Instance.doorSource, 0);
         foreach (Transform child in cellDoors.transform)
         {
             child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, 90);
@@ -269,6 +270,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     {
         lockPosition.SetActive(false);
         mainDoor.transform.position = new Vector3(-10.145f, 1.77f, 10.033f);
+        AudioManager.Instance.PlayAudio(MinigameManager.Instance.opendoorAudioSource, AudioManager.Instance.doorSource, 1);
         foreach (Transform child in cellDoors.transform)
         {
             child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, -90);

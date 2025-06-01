@@ -151,6 +151,7 @@ namespace Player
         private void CollectItem()
         {
             playerControls.DisableInput();
+            currentCollectible.CollectAudio();
             animationHandler.PlayPickupAnimation(() =>
             {
                 currentCollectible.Collect();

@@ -12,6 +12,7 @@ public class MinigameManager : Singleton<MinigameManager>
     public PoliceRoomKey policeRoomKey;
     public Crowbar crowbar;
     public AudioSource opendoorAudioSource;
+    public AudioSource brakedoorAudioSource;
 
     public void RegisterMinigame(string name, IMinigame minigame)
     {
