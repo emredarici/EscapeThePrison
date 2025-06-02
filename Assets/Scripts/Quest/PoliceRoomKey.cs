@@ -3,7 +3,7 @@ using Player;
 
 public class PoliceRoomKey : MonoBehaviour, ICollectible
 {
-    public bool IsCollected { get; private set; } = false;
+    public bool IsCollected = false;
     public AudioSource audioSource;
 
     private void Awake()

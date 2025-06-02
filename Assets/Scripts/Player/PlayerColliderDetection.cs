@@ -8,15 +8,17 @@ namespace Player
         private ICollectible currentCollectible;
         private IPlayerAnimationHandler animationHandler;
         private PlayerControls playerControls;
+        private DialogueManager dialogueManager;
 
         private bool canOpenPoliceDoor = false;
-        private bool isCollectiblePut = false;
+        public bool isCollectiblePut = false;
         public int triggerCount = 0;
 
         private void Awake()
         {
             animationHandler = GetComponent<IPlayerAnimationHandler>();
             playerControls = GetComponent<PlayerControls>();
+            dialogueManager = FindObjectOfType<DialogueManager>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -50,7 +52,8 @@ namespace Player
                         other.gameObject.SetActive(false);
                         DailyRoutineManager.Instance.fourDayNPC.SetActive(true);
                         VFXManager.Instance.SpawnDialogueMarker(DailyRoutineManager.Instance.fourDayVFXPosition.position);
-
+                        DailyRoutineManager.Instance.polices.bedTimePolice.SetActive(false);
+                        dialogueManager.chasePolice.hasDialogueTriggered = false;
                     }
                 }
                 else if (!MinigameManager.Instance.policeRoomKey.IsCollected)
@@ -155,6 +158,7 @@ namespace Player
         {
             if (other.CompareTag("RefactoryDetection"))
             {
+                DailyRoutineManager.Instance.polices.bedTimePolice.SetActive(false);
                 if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4) && DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
                 {
                     MinigameManager minigameManager = MinigameManager.Instance;

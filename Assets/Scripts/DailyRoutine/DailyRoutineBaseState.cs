@@ -15,6 +15,10 @@ public class HeadcountState : DailyRoutineBaseState
     {
         dailyRoutineManager.dayTimeManager.SetTimeOfDay(DayTimeManager.TimeOfDay.Morning);
         dailyRoutineManager.headcountPolice.SetActive(true);
+        if (dailyRoutineManager.polices.bedTimePolice.activeSelf == false)
+        {
+            dailyRoutineManager.polices.bedTimePolice.SetActive(true);
+        }
         dailyRoutineManager.ResetAllNpcPositions();
         dailyRoutineManager.PopulateNpcList();
         foreach (var npc in dailyRoutineManager.allNpcs)
@@ -129,6 +133,8 @@ public class RectimeState : DailyRoutineBaseState
         AudioManager.Instance.StopAudio(dailyRoutineManager.rectimeSource);
         dailyRoutineManager.lockPosition.SetActive(true);
         VFXManager.Instance.SpawnLocationMarker(dailyRoutineManager.lockPosition.transform.position);
+        dailyRoutineManager.polices.bedTimePolice.SetActive(true);
+        dailyRoutineManager.polices.rectimePolice.SetActive(false);
         if (dailyRoutineManager.dayManager.IsDay(Day.Day2))
         {
             dailyRoutineManager.twoDayNPC.SetActive(false);

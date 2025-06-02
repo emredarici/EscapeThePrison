@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI messageText;
     public RectTransform backgroundBox;
     public PlayerControls player;
+    public ChasePolice chasePolice;
 
     List<Message> cureentMessages;
     Actor[] currentActors;
@@ -88,6 +89,7 @@ public class DialogueManager : MonoBehaviour
                 DailyRoutineManager.Instance.fourDayNPC.SetActive(false);
                 DailyRoutineManager.Instance.isEatFood = true;
                 VFXManager.Instance.DestroyDialogueMarker();
+                chasePolice.EndDialogue();
             }
 
         }

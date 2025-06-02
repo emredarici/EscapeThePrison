@@ -12,13 +12,13 @@ public class ChasePolice : MonoBehaviour
     [Tooltip("Yapay zekanın görüş açısı (derece cinsinden)")]
     public float fovAngle = 45f;
     [Tooltip("Yapay zekanın görüş mesafesi")]
-    public float viewDistance = 10f;
+    public float viewDistance = 20f;
 
     [Header("Movement Parameters")]
     [Tooltip("Yapay zekanın takip ederkenki hızı")]
     public float chaseSpeed = 5f;
     [Tooltip("Yapay zekanın devriye gezerkenki hızı")]
-    public float patrolSpeed = 2f;
+    public float patrolSpeed = 1.5f;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -28,8 +28,12 @@ public class ChasePolice : MonoBehaviour
     private enum AIState
     {
         Patrol,
-        Chase
+        Chase,
+        Dialogue // yeni enum
     }
+
+    private Transform dialogueTarget = null;
+    public bool hasDialogueTriggered = true; // Sınıf değişkenlerine ekle
 
     private void Awake()
     {
@@ -46,16 +50,22 @@ public class ChasePolice : MonoBehaviour
             case AIState.Patrol:
                 PatrolState();
                 break;
-
             case AIState.Chase:
                 ChaseState();
+                break;
+            case AIState.Dialogue:
+                animator.SetFloat("Speed", 0f); // Diyalog sırasında animasyon dursun
+                LookAtPlayer();
                 break;
         }
     }
 
     private void PatrolState()
     {
-        if (CanSeePlayer())
+        bool isChaseDay = DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4) ||
+                          DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5);
+
+        if (isChaseDay && CanSeePlayer())
         {
             StartChasing();
             currentState = AIState.Chase;
@@ -94,10 +104,40 @@ public class ChasePolice : MonoBehaviour
         {
             if (hit.transform.CompareTag("Player"))
             {
+                // 4. gün özel diyalog kontrolü
+                if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4) && !hasDialogueTriggered)
+                {
+                    var key = MinigameManager.Instance.key;
+                    var crowbar = MinigameManager.Instance.crowbar;
+                    var playerDetection = hit.transform.GetComponent<Player.PlayerColliderDetection>();
+
+                    if (key != null && crowbar != null && playerDetection != null)
+                    {
+                        if (key.IsCollected && crowbar.IsCollected && !playerDetection.isCollectiblePut)
+                        {
+                            var dialogue = GetComponent<DialogueTrigger>();
+                            // Diyalog başlatılırken:
+                            if (dialogue != null && currentState != AIState.Dialogue && !hasDialogueTriggered)
+                            {
+                                hasDialogueTriggered = true; // Sadece bir kere çalışsın!
+                                currentState = AIState.Dialogue;
+                                dialogueTarget = hit.transform;
+
+                                // PlayerControls DisableInput
+                                var playerControls = hit.transform.GetComponent<Player.PlayerControls>();
+                                if (playerControls != null)
+                                    playerControls.DisableInput();
+
+                                agent.isStopped = true; // <-- DİYALOG BAŞLARKEN AGENT'I DURDUR!
+                                dialogue.StartDialogue();
+                            }
+                            return false;
+                        }
+                    }
+                }
                 return true;
             }
         }
-
         return false;
     }
 
@@ -124,5 +164,19 @@ public class ChasePolice : MonoBehaviour
         }
 
         agent.SetDestination(currentTarget.position);
+    }
+
+    private void LookAtPlayer()
+    {
+        if (dialogueTarget == null) return;
+        transform.LookAt(dialogueTarget);
+        // agent.isStopped zaten true, başka bir şey yapmaya gerek yok
+    }
+
+    public void EndDialogue()
+    {
+        dialogueTarget = null;
+        agent.isStopped = false;
+        currentState = AIState.Patrol;
     }
 }

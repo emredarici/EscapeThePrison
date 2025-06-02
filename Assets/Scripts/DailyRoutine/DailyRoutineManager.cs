@@ -14,6 +14,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public BedtimeState bedtimeState = new BedtimeState();
 
     public NPCController[] allNpcs => FindObjectsOfType<NPCController>();
+    public Polices polices;
 
     public List<NavMeshAgent> npcs;
     public Transform grabFoodPosition;
@@ -211,6 +212,7 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, $"Attendance confirmed. Headcount: {npcs.Count + 1}.");
         DebugToolKit.Log("Player headcount confirmed.");
         AudioManager.Instance.StopAudio(headcountPolice.GetComponent<AudioSource>());
+        polices.chowTimePolice.SetActive(true);
         yield return new WaitForSeconds(5f);
         this.SwitchState(chowtimeState);
     }
