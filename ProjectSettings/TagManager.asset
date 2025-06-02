@@ -14,6 +14,8 @@ TagManager:
   - Lock
   - PoliceRoomVFX
   - DialogueMarkerVFX
+  - RefactoryDetection
+  - CollectiblePutDetection
   layers:
   - Default
   - TransparentFX

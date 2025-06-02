@@ -9,4 +9,11 @@ public class GameManager : Singleton<GameManager>
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
+    public void LoseGame()
+    {
+        // Implement game over logic here
+        Debug.Log("Game Over");
+
+    }
 }

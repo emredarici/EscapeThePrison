@@ -10,6 +10,7 @@ namespace Player
         private PlayerControls playerControls;
 
         private bool canOpenPoliceDoor = false;
+        private bool isCollectiblePut = false;
         public int triggerCount = 0;
 
         private void Awake()
@@ -22,6 +23,8 @@ namespace Player
         {
             HandleLocationMarker(other);
             HandleDialogueMarker(other);
+            HandleRefactoryDetection(other);
+            HandleCollectiblePutDetection(other);
 
             if (other.TryGetComponent<ICollectible>(out var collectible))
             {
@@ -143,6 +146,45 @@ namespace Player
                     if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3))
                     {
                         DailyRoutineManager.Instance.thirdDay2NPC.GetComponentInChildren<DialogueTrigger>().StartDialogue();
+                    }
+                }
+            }
+        }
+
+        private void HandleRefactoryDetection(Collider other)
+        {
+            if (other.CompareTag("RefactoryDetection"))
+            {
+                if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4) && DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
+                {
+                    MinigameManager minigameManager = MinigameManager.Instance;
+                    if (minigameManager.key.IsCollected && minigameManager.crowbar.IsCollected)
+                    {
+                        if (!isCollectiblePut)
+                        {
+                            GameManager.Instance.LoseGame();
+                        }
+                    }
+                    else
+                    {
+                        UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Go to the guard room and collect the items before the meal.");
+                    }
+                }
+            }
+        }
+
+        private void HandleCollectiblePutDetection(Collider other)
+        {
+            if (other.CompareTag("CollectiblePutDetection"))
+            {
+                if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4) && DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.chowtimeState)
+                {
+                    MinigameManager minigameManager = MinigameManager.Instance;
+                    if (minigameManager.key.IsCollected && minigameManager.crowbar.IsCollected)
+                    {
+                        AudioManager.Instance.PlayAudio(playerControls.audioSource, AudioManager.Instance.colletSouce, 2);
+                        isCollectiblePut = true;
+                        Debug.Log("Player has hidden the key and crowbar.");
                     }
                 }
             }
