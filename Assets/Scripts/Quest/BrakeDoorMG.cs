@@ -60,6 +60,10 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
         IsGameRunning = false;
         MinigameManager.Instance.minigameActive = false;
         UIManager.Instance.DeleteText(UIManager.Instance.informationText);
+        if (hitCount >= maxHits)
+        {
+            StartCoroutine(WaitForHidden(2f));
+        }
     }
 
     private void Update()
@@ -160,5 +164,15 @@ public class BrakeDoorMG : MonoBehaviour, IMinigame
                 AudioManager.Instance.PlayAudio(MinigameManager.Instance.brakedoorAudioSource, AudioManager.Instance.brakeDoorminigameSource, 4);
                 break;
         }
+    }
+
+    private IEnumerator WaitForHidden(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        UIManager.Instance.ChangeText(UIManager.Instance.informationText, "The alarms have been triggered, hide immediately!");
+        DailyRoutineManager.Instance.Alarm();
+        yield return new WaitForSeconds(2f);
+        DailyRoutineManager.Instance.polices.escape2police.SetActive(true);
+        VFXManager.Instance.SpawnLocationMarker(DailyRoutineManager.Instance.escapeVFXPosition.position);
     }
 }

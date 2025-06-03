@@ -104,7 +104,12 @@ public class ChasePolice : MonoBehaviour
         {
             if (hit.transform.CompareTag("Player"))
             {
-                // 4. gün özel diyalog kontrolü
+                if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
+                {
+                    GameManager.Instance.LoseGame();
+                    return true;
+                }
+
                 if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4) && !hasDialogueTriggered)
                 {
                     var key = MinigameManager.Instance.key;
@@ -116,7 +121,6 @@ public class ChasePolice : MonoBehaviour
                         if (key.IsCollected && crowbar.IsCollected && !playerDetection.isCollectiblePut)
                         {
                             var dialogue = GetComponent<DialogueTrigger>();
-                            // Diyalog başlatılırken:
                             if (dialogue != null && currentState != AIState.Dialogue && !hasDialogueTriggered)
                             {
                                 hasDialogueTriggered = true; // Sadece bir kere çalışsın!

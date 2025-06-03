@@ -26,6 +26,8 @@ public class AudioManager : Singleton<AudioManager>
 
     [Header("Eating SFX")]
     public AudioData[] eatingSource;
+    [Header("Alarm SFX")]
+    public AudioData[] alarmSource;
 
     [Header("Minigame SFX")]
     public AudioData[] minigameSource;

@@ -95,6 +95,11 @@ namespace Player
                 else
                 {
                     DailyRoutineManager.Instance.ResetAllNpcPositions();
+                    Polices police = DailyRoutineManager.Instance.polices;
+                    police.rectimePolice.SetActive(false);
+                    police.bedTimePolice.SetActive(false);
+                    police.chowTimePolice.SetActive(false);
+                    police.escapePolice.SetActive(true);
                     UIManager.Instance.DeleteText(UIManager.Instance.informationText);
                 }
             });

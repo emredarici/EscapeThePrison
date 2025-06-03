@@ -40,7 +40,6 @@ public class MinigameManager : Singleton<MinigameManager>
         if (minigames.ContainsKey(name) && !minigameActive)
         {
             minigameActive = true;
-            currentMinigame?.EndMinigame();
             currentMinigame = minigames[name];
             currentMinigame.StartMinigame();
         }

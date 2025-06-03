@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 
 namespace Player
 {
@@ -62,6 +63,10 @@ namespace Player
                 }
 
             }
+            if (other.CompareTag("PoliceDetection") && DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
+            {
+                StartCoroutine(WaitForPoliceDet(3f));
+            }
 
         }
 
@@ -121,6 +126,11 @@ namespace Player
                 {
                     VFXManager.Instance.DestroyMarker();
                 }
+
+                if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
+                {
+                    GameManager.Instance.WinGame();
+                }
             }
         }
 
@@ -134,10 +144,12 @@ namespace Player
                     if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3) && DailyRoutineManager.Instance.isThirdDayNPCDialouge == false)
                     {
                         DailyRoutineManager.Instance.thirdDayNPC.GetComponent<DialogueTrigger>().StartDialogue();
+                        VFXManager.Instance.DestroyDialogueMarker();
                     }
                     if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day4) && DailyRoutineManager.Instance.isFourDayNPCDialouge == false)
                     {
                         DailyRoutineManager.Instance.fourDayNPC.GetComponent<DialogueTrigger>().StartDialogue();
+                        VFXManager.Instance.DestroyDialogueMarker();
                     }
                 }
                 if (DailyRoutineManager.Instance.currentState == DailyRoutineManager.Instance.rectimeState)
@@ -145,10 +157,12 @@ namespace Player
                     if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day2))
                     {
                         DailyRoutineManager.Instance.twoDayNPC.GetComponentInChildren<DialogueTrigger>().StartDialogue();
+                        VFXManager.Instance.DestroyDialogueMarker();
                     }
                     if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day3))
                     {
                         DailyRoutineManager.Instance.thirdDay2NPC.GetComponentInChildren<DialogueTrigger>().StartDialogue();
+                        VFXManager.Instance.DestroyDialogueMarker();
                     }
                 }
             }
@@ -208,6 +222,12 @@ namespace Player
             });
         }
 
+        private IEnumerator WaitForPoliceDet(float waitTime)
+        {
+            UIManager.Instance.ChangeText(UIManager.Instance.informationText, "A police officer is coming, hide behind the locker!");
+            yield return new WaitForSeconds(waitTime);
+            DailyRoutineManager.Instance.polices.escape1police.SetActive(true);
+        }
 
     }
 }

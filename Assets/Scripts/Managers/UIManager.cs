@@ -10,6 +10,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject movementTrailer;
     private Dictionary<TextMeshProUGUI, Coroutine> typeCoroutines = new Dictionary<TextMeshProUGUI, Coroutine>();
     public Image fadeImage;
+    public Image wastedImage;
 
     public void ChangeText(TextMeshProUGUI text, string message)
     {
@@ -77,5 +78,27 @@ public class UIManager : Singleton<UIManager>
 
         if (fadeIn)
             fadeImage.gameObject.SetActive(false);
+    }
+
+    public void ShowWastedImage(System.Action onComplete = null)
+    {
+        if (wastedImage == null) return;
+
+        Color color = wastedImage.color;
+        color.a = 0f;
+        wastedImage.color = color;
+        wastedImage.gameObject.SetActive(true);
+
+        LeanTween.value(wastedImage.gameObject, 0f, 0.9f, 1f)
+            .setOnUpdate((float val) =>
+            {
+                Color c = wastedImage.color;
+                c.a = val;
+                wastedImage.color = c;
+            })
+            .setOnComplete(() =>
+            {
+                onComplete?.Invoke();
+            });
     }
 }

@@ -12,8 +12,20 @@ public class GameManager : Singleton<GameManager>
 
     public void LoseGame()
     {
-        // Implement game over logic here
-        Debug.Log("Game Over");
+        UIManager.Instance.ShowWastedImage(() =>
+        {
+            Time.timeScale = 0.1f;
+            // Tüm aktif AudioSource'ların pitch'ini düşür
+            foreach (var audio in FindObjectsOfType<AudioSource>())
+            {
+                audio.pitch = 0.3f;
+            }
+            Debug.Log("Game Over");
+        });
+    }
 
+    public void WinGame()
+    {
+        Debug.Log("You Win!");
     }
 }

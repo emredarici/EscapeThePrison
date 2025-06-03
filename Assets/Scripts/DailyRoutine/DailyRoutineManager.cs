@@ -48,6 +48,11 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public AudioSource chowtimeSource;
     public AudioSource bedtimeSource;
 
+    [Header("Escape Items")]
+    public Transform escapeVFXPosition;
+    public GameObject alarmsLight;
+    public AudioSource[] alarmSources;
+
     private float stepDistance = 2f;
 
     [HideInInspector] public bool isMoving = false;
@@ -290,6 +295,25 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         foreach (var npc in allNpcs)
         {
             npc.OnPositionReset();
+        }
+    }
+    public void Alarm()
+    {
+        DebugToolKit.Log("Alarm triggered!");
+        AudioManager.Instance.PlayAudio(alarmSources[0], AudioManager.Instance.alarmSource, 0);
+        AudioManager.Instance.PlayAudio(alarmSources[1], AudioManager.Instance.alarmSource, 1);
+        AudioManager.Instance.PlayAudio(alarmSources[2], AudioManager.Instance.alarmSource, 2);
+        StartCoroutine(AlarmLightCoroutine());
+    }
+
+    private IEnumerator AlarmLightCoroutine()
+    {
+        while (true)
+        {
+            alarmsLight.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            alarmsLight.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
