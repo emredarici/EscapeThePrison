@@ -20,7 +20,7 @@ public class NPCController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
         npcTray = this.transform.GetChild(1).gameObject;
-        npcTray.SetActive(false);
+        StopCarryingTray();
     }
 
     public void SetState(NPCState newState)

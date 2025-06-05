@@ -19,6 +19,7 @@ namespace Player
         [SerializeField] private float runningSpeed = 8.0f;
         [SerializeField] private float gravityValue = -9.81f;
         [SerializeField] private float rotationSpeed = 4f;
+        [SerializeField] private float sensitivity = 1.0f;
 
         private Vector3 playerVelocity;
         private bool groundedPlayer;
@@ -140,7 +141,7 @@ namespace Player
             {
                 float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg + cameraMainTransform.eulerAngles.y;
                 Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed * sensitivity);
             }
         }
 
@@ -148,6 +149,12 @@ namespace Player
         {
             playerVelocity.y += gravityValue * Time.deltaTime;
             controller.Move(playerVelocity * Time.deltaTime);
+        }
+
+        public float Sensitivity
+        {
+            get => sensitivity;
+            set => sensitivity = value;
         }
     }
 }
