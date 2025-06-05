@@ -15,13 +15,20 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.ShowWastedImage(() =>
         {
             Time.timeScale = 0.1f;
-            // Tüm aktif AudioSource'ların pitch'ini düşür
             foreach (var audio in FindObjectsOfType<AudioSource>())
             {
                 audio.pitch = 0.3f;
             }
             Debug.Log("Game Over");
+            StartCoroutine(GoToLoseScene());
         });
+    }
+
+    private System.Collections.IEnumerator GoToLoseScene()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("LoseScene");
     }
 
     public void WinGame()
