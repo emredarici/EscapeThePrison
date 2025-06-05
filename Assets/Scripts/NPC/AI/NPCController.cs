@@ -12,12 +12,15 @@ public class NPCController : MonoBehaviour
     public AudioSource audioSource;
 
     public bool hasRandomStateSet = false;
+    private GameObject npcTray;
 
     private void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
+        npcTray = this.transform.GetChild(1).gameObject;
+        npcTray.SetActive(false);
     }
 
     public void SetState(NPCState newState)
@@ -98,5 +101,17 @@ public class NPCController : MonoBehaviour
         {
             Debug.Log("NPC is at rectime position");
         });
+    }
+
+    public void CarriyngTray()
+    {
+        this.animator.SetBool("isTray", true);
+        this.npcTray.SetActive(true);
+    }
+
+    public void StopCarryingTray()
+    {
+        this.animator.SetBool("isTray", false);
+        this.npcTray.SetActive(false);
     }
 }

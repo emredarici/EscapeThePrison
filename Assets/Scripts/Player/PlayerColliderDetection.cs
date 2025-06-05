@@ -10,6 +10,7 @@ namespace Player
         private IPlayerAnimationHandler animationHandler;
         private PlayerControls playerControls;
         private DialogueManager dialogueManager;
+        private PlayerAnimationHandler playerAnimationHandler;
 
         private bool canOpenPoliceDoor = false;
         public bool isCollectiblePut = false;
@@ -17,6 +18,7 @@ namespace Player
 
         private void Awake()
         {
+            playerAnimationHandler = this.gameObject.GetComponent<PlayerAnimationHandler>();
             animationHandler = GetComponent<IPlayerAnimationHandler>();
             playerControls = GetComponent<PlayerControls>();
             dialogueManager = FindObjectOfType<DialogueManager>();
@@ -108,12 +110,14 @@ namespace Player
                         if (triggerCount == 0)
                         {
                             VFXManager.Instance.DestroyMarker(0f);
+                            playerAnimationHandler.PlayerOnTrayAnimation();
                             VFXManager.Instance.SpawnLocationMarker(DailyRoutineManager.Instance.PlayerRandomTablePosition().position);
                         }
 
                         if (triggerCount > 0)
                         {
                             VFXManager.Instance.DestroyMarker(2f);
+                            playerAnimationHandler.PlayerOffTrayAnimation();
                             DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.rectimeState);
                             triggerCount = 0;
                             return;

@@ -13,6 +13,7 @@ namespace Player
         private Transform cameraMainTransform;
         public Transform startPosition;
         [HideInInspector] public AudioSource audioSource;
+        public GameObject trayObject;
 
         [SerializeField] private float playerSpeed = 5.0f;
         [SerializeField] private float runningSpeed = 8.0f;
@@ -23,7 +24,7 @@ namespace Player
         private bool groundedPlayer;
         private bool isInputEnabled = true; // Hareket girişlerini kontrol eden bayrak
 
-        private IPlayerAnimationHandler animationHandler;
+        public IPlayerAnimationHandler animationHandler;
 
         private void Awake()
         {
@@ -31,6 +32,7 @@ namespace Player
             capsuleCollider = GetComponent<CapsuleCollider>();
             controller = GetComponent<CharacterController>();
             animationHandler = GetComponent<IPlayerAnimationHandler>();
+            trayObject.SetActive(false);
         }
 
         void OnEnable()

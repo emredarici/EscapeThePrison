@@ -21,6 +21,7 @@ public class NpcCollider : MonoBehaviour
                 {
                     this.npcController.agent.Warp(other.transform.position);
                     this.gameObject.transform.localRotation = other.transform.localRotation;
+                    this.npcController.StopCarryingTray();
                     this.npcController.animator.SetBool("isSitting", true);
                     AudioManager.Instance.PlayAudio(npcController.audioSource, AudioManager.Instance.eatingSource);
                 }

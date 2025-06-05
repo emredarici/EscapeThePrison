@@ -110,5 +110,31 @@ namespace Player
             yield return new WaitForSeconds(duration + 4.0f);
             onAnimationComplete?.Invoke();
         }
+
+        public void PlayerOnTrayAnimation()
+        {
+            if (animator != null)
+            {
+                animator.SetBool("isTray", true);
+                playerControls.trayObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("Animator is not assigned in PlayerAnimationHandler.");
+            }
+        }
+
+        public void PlayerOffTrayAnimation()
+        {
+            if (animator != null)
+            {
+                animator.SetBool("isTray", false);
+                playerControls.trayObject.SetActive(false);
+            }
+            else
+            {
+                Debug.LogWarning("Animator is not assigned in PlayerAnimationHandler.");
+            }
+        }
     }
 }

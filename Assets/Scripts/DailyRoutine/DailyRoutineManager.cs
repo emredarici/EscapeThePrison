@@ -131,7 +131,10 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
                 if (Mathf.Abs(firstNpc.transform.position.x - grabFoodPosition.position.x) <= 0.1f)
                 {
                     Transform currentExitPosition = exitPosition[0];
-                    firstNpc.GetComponent<NPCController>().targetExitPosition = currentExitPosition;
+                    NPCController npcController = firstNpc.GetComponent<NPCController>();
+                    npcController.targetExitPosition = currentExitPosition;
+                    npcController.animator.SetBool("Walking", false);
+                    npcController.CarriyngTray();
                     firstNpc.SetDestination(currentExitPosition.position);
 
                     DebugToolKit.Log("NPC reached exit position.");
