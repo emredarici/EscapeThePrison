@@ -27,6 +27,14 @@ namespace Player
             StartCoroutine(WaitForAnimation(animationDuration, onAnimationComplete));
         }
 
+        public void PlaySitAnimation(Action onAnimationComplete)
+        {
+            animator.SetTrigger("isSitting");
+
+            float animationDuration = GetAnimationClipLength("isSitting");
+            StartCoroutine(WaitForAnimation(2f, onAnimationComplete));
+        }
+
         public void SetMovementSpeed(float speed)
         {
             animator.SetFloat("Speed", speed);
@@ -135,6 +143,23 @@ namespace Player
             {
                 Debug.LogWarning("Animator is not assigned in PlayerAnimationHandler.");
             }
+        }
+
+        public void SitPlayer()
+        {
+            playerControls.DisableInput();
+            playerControls.controller.enabled = false;
+            UIManager.Instance.FadeCamera(false, 0.1f);
+            AudioManager.Instance.PlayAudio(playerControls.audioSource, AudioManager.Instance.eatingSource);
+            PlaySitAnimation(() =>
+            {
+                animator.SetBool("isSitting", false);
+                SetMovementSpeed(0);
+                playerControls.EnableInput();
+                playerControls.controller.enabled = true;
+                UIManager.Instance.FadeCamera(true, 0.1f);
+                DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.rectimeState);
+            });
         }
     }
 }

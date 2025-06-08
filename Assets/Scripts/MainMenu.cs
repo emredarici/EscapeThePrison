@@ -24,9 +24,11 @@ public class MainMenu : MonoBehaviour
     {
         playButton.onClick.AddListener(OnPlay);
         quitButton.onClick.AddListener(OnQuit);
-        creditButton.onClick.AddListener(OnCredit);
         githubButton.onClick.AddListener(OnGithub);
         itchioButton.onClick.AddListener(OnItchio);
+        if (creditButton != null)
+            creditButton.onClick.AddListener(OnCredit);
+
 
         if (backgrounds.Length > 0)
         {
@@ -55,12 +57,13 @@ public class MainMenu : MonoBehaviour
 
     void OnGithub()
     {
-        Application.OpenURL("https://github.com/kendi-linkin");
+        Application.OpenURL("https://google.com");
     }
 
     void OnItchio()
     {
-        Application.OpenURL("https://itch.io/profile/kendi-linkin");
+        Debug.Log("Itchio button clicked");
+        Application.OpenURL("https://google.com");
     }
 
     IEnumerator BackgroundFadeLoop()

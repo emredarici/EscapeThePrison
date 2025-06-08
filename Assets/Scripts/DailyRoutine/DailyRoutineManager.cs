@@ -153,18 +153,30 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
             }
             yield return null;
         }
-        VFXManager.Instance.SpawnLocationMarker(grabFoodPosition.transform.position);
+        SpawnMarkerOnce(grabFoodPosition.transform.position);
         UIManager.Instance.ChangeText(UIManager.Instance.informationText, "Your food's ready, grab it and sit at the table.");
 
         DebugToolKit.Log("MoveQueue completed.");
     }
 
-    public Transform PlayerRandomTablePosition()
+    private void SpawnMarkerOnce(Vector3 position)
+    {
+        float threshold = 0.1f;
+        var existingMarkers = GameObject.FindGameObjectsWithTag("LocationMarkerVFX");
+        foreach (var marker in existingMarkers)
+        {
+            if (Vector3.Distance(marker.transform.position, position) < threshold)
+                return;
+        }
+        VFXManager.Instance.SpawnLocationMarker(position);
+    }
+
+    public (Vector3 position, Quaternion rotation) PlayerRandomTablePosition()
     {
         int randomIndex = Random.Range(0, exitPosition.Count);
         Transform randomTable = exitPosition[randomIndex];
         exitPosition.RemoveAt(randomIndex);
-        return randomTable;
+        return (randomTable.position, randomTable.localRotation);
     }
 
 
@@ -272,7 +284,8 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         AudioManager.Instance.PlayAudio(MinigameManager.Instance.opendoorAudioSource, AudioManager.Instance.doorSource, 0);
         foreach (Transform child in cellDoors.transform)
         {
-            child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, 90);
+            Vector3 euler = child.localRotation.eulerAngles;
+            child.localRotation = Quaternion.Euler(euler.x, euler.y, 90f);
         }
     }
 
@@ -283,7 +296,8 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
         AudioManager.Instance.PlayAudio(MinigameManager.Instance.opendoorAudioSource, AudioManager.Instance.doorSource, 1);
         foreach (Transform child in cellDoors.transform)
         {
-            child.localRotation *= Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, -90);
+            Vector3 euler = child.localRotation.eulerAngles;
+            child.localRotation = Quaternion.Euler(euler.x, euler.y, -90f);
         }
     }
 
@@ -303,9 +317,9 @@ public class DailyRoutineManager : Singleton<DailyRoutineManager>
     public void Alarm()
     {
         DebugToolKit.Log("Alarm triggered!");
-        AudioManager.Instance.PlayAudio(alarmSources[0], AudioManager.Instance.alarmSource, 0);
-        AudioManager.Instance.PlayAudio(alarmSources[1], AudioManager.Instance.alarmSource, 1);
-        AudioManager.Instance.PlayAudio(alarmSources[2], AudioManager.Instance.alarmSource, 2);
+        AudioManager.Instance.PlayAmbience(alarmSources, AudioManager.Instance.alarmSource[0], 0);
+        AudioManager.Instance.PlayAmbience(alarmSources, AudioManager.Instance.alarmSource[1], 1);
+        AudioManager.Instance.PlayAmbience(alarmSources, AudioManager.Instance.alarmSource[2], 2);
         StartCoroutine(AlarmLightCoroutine());
     }
 

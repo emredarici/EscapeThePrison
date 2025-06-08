@@ -8,7 +8,7 @@ namespace Player
     {
         [SerializeField] public InputActionReference movementControl;
         [SerializeField] private InputActionReference runControl;
-        private CharacterController controller;
+        [HideInInspector] public CharacterController controller;
         private CapsuleCollider capsuleCollider;
         private Transform cameraMainTransform;
         public Transform startPosition;

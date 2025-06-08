@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
+using Unity.VisualScripting;
 
 namespace Player
 {
@@ -11,6 +12,10 @@ namespace Player
         private PlayerControls playerControls;
         private DialogueManager dialogueManager;
         private PlayerAnimationHandler playerAnimationHandler;
+
+        private Vector3 lastRandomTableTransform;
+        private Quaternion lastRandomTableRotation;
+
 
         private bool canOpenPoliceDoor = false;
         public bool isCollectiblePut = false;
@@ -111,14 +116,19 @@ namespace Player
                         {
                             VFXManager.Instance.DestroyMarker(0f);
                             playerAnimationHandler.PlayerOnTrayAnimation();
-                            VFXManager.Instance.SpawnLocationMarker(DailyRoutineManager.Instance.PlayerRandomTablePosition().position);
+                            var tableTransform = DailyRoutineManager.Instance.PlayerRandomTablePosition();
+                            lastRandomTableTransform = tableTransform.position;
+                            lastRandomTableRotation = tableTransform.rotation;
+                            VFXManager.Instance.SpawnLocationMarker(lastRandomTableTransform);
                         }
 
                         if (triggerCount > 0)
                         {
                             VFXManager.Instance.DestroyMarker(2f);
                             playerAnimationHandler.PlayerOffTrayAnimation();
-                            DailyRoutineManager.Instance.SwitchState(DailyRoutineManager.Instance.rectimeState);
+                            playerAnimationHandler.SitPlayer();
+                            this.gameObject.transform.position = lastRandomTableTransform;
+                            this.gameObject.transform.localRotation = lastRandomTableRotation;
                             triggerCount = 0;
                             return;
                         }

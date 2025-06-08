@@ -80,6 +80,16 @@ public class AudioManager : Singleton<AudioManager>
         source.Play();
     }
 
+    public void PlayAmbience(AudioSource[] source, AudioData data, int index)
+    {
+        if (source == null || data == null || data.clip == null || index < 0 || index >= source.Length)
+            return;
+
+        source[index].clip = data.clip;
+        source[index].volume = data.volume;
+        source[index].loop = true;
+        source[index].Play();
+    }
 
     public void PlayLoopingAudio(AudioData data, AudioSource audioSource)
     {
