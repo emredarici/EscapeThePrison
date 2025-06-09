@@ -17,6 +17,7 @@ TagManager:
   - RefactoryDetection
   - CollectiblePutDetection
   - PoliceDetection
+  - EscapeCarVFX
   layers:
   - Default
   - TransparentFX

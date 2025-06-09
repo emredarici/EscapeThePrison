@@ -252,8 +252,8 @@ MonoBehaviour:
   itchioButton: {fileID: 1615569271}
   backgroundImage: {fileID: 1843318545}
   backgrounds:
-  - {fileID: 2800000, guid: af57e56e3e25e1740bf4069ad5739326, type: 3}
   - {fileID: 2800000, guid: 8e40be8ca9831024c9fd99529ca9dd34, type: 3}
+  - {fileID: 2800000, guid: af57e56e3e25e1740bf4069ad5739326, type: 3}
   - {fileID: 2800000, guid: db9eea022a41e2342b10fed3a8e8e795, type: 3}
   fadeDuration: 1.5
   showDuration: 10

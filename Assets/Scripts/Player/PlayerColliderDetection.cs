@@ -12,6 +12,7 @@ namespace Player
         private PlayerControls playerControls;
         private DialogueManager dialogueManager;
         private PlayerAnimationHandler playerAnimationHandler;
+        public CarMovement carMovement;
 
         private Vector3 lastRandomTableTransform;
         private Quaternion lastRandomTableRotation;
@@ -73,6 +74,12 @@ namespace Player
             if (other.CompareTag("PoliceDetection") && DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
             {
                 StartCoroutine(WaitForPoliceDet(3f));
+            }
+
+            if (other.CompareTag("EscapeCarVFX"))
+            {
+                carMovement.CarMovementStart();
+                other.gameObject.SetActive(false);
             }
 
         }
