@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
+    public Transform outPosition;
+
     void Start()
     {
         SetCursorVisibility();
@@ -50,16 +52,33 @@ public class GameManager : Singleton<GameManager>
         });
     }
 
-    private System.Collections.IEnumerator GoToLoseScene()
+    public IEnumerator GoToLoseScene()
     {
         yield return new WaitForSecondsRealtime(2f);
         Time.timeScale = 1f;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("LoseScene");
+        SceneManager.LoadScene("LoseScene");
     }
 
     public void WinGame()
     {
         Debug.Log("You Win!");
+        var player = FindObjectOfType<Player.PlayerControls>();
+        if (player != null && outPosition != null)
+        {
+            player.DisableInput();
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = outPosition.position;
+            player.GetComponent<CharacterController>().enabled = true;
+            player.EnableInput();
+        }
+    }
+
+    public IEnumerator GoToWinScene()
+    {
+        UIManager.Instance.FadeCamera(false, 0.3f);
+        yield return new WaitForSecondsRealtime(2f);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("WonScene");
     }
 
     void Update()

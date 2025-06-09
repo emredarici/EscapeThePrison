@@ -7,6 +7,12 @@ public class CarMovement : MonoBehaviour
     public float carSpeed;
     public Camera carCamera;
     public Camera mainCamera;
+    private DialogueTrigger dialogueTrigger;
+
+    private void Start()
+    {
+        dialogueTrigger = this.GetComponent<DialogueTrigger>();
+    }
 
     public void CarMovementStart()
     {
@@ -19,9 +25,11 @@ public class CarMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SwitchCameras();
         UIManager.Instance.FadeCamera(true, 0.5f);
+        dialogueTrigger.StartDialogue();
+
         while (true)
         {
-            transform.Translate(Vector3.down * carSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * carSpeed * Time.deltaTime);
             yield return null;
         }
     }

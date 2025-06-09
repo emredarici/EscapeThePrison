@@ -91,6 +91,10 @@ public class DialogueManager : MonoBehaviour
                 VFXManager.Instance.DestroyDialogueMarker();
                 chasePolice.EndDialogue();
             }
+            if (DailyRoutineManager.Instance.dayManager.IsDay(Day.Day5))
+            {
+                StartCoroutine(GameManager.Instance.GoToWinScene());
+            }
 
         }
     }
