@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 namespace Player
 {
@@ -21,9 +22,11 @@ namespace Player
         [SerializeField] private float rotationSpeed = 4f;
         [SerializeField] private float sensitivity = 1.0f;
 
+        public CinemachineFreeLook freeLookCamera;
+
         private Vector3 playerVelocity;
         private bool groundedPlayer;
-        private bool isInputEnabled = true; // Hareket girişlerini kontrol eden bayrak
+        private bool isInputEnabled = true;
 
         public IPlayerAnimationHandler animationHandler;
 
@@ -141,7 +144,7 @@ namespace Player
             {
                 float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg + cameraMainTransform.eulerAngles.y;
                 Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed * sensitivity);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
             }
         }
 
@@ -154,7 +157,15 @@ namespace Player
         public float Sensitivity
         {
             get => sensitivity;
-            set => sensitivity = value;
+            set
+            {
+                sensitivity = value;
+                if (freeLookCamera != null)
+                {
+                    freeLookCamera.m_XAxis.m_MaxSpeed = sensitivity * 200;
+                    freeLookCamera.m_YAxis.m_MaxSpeed = sensitivity * 2f;
+                }
+            }
         }
     }
 }

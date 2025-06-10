@@ -10,6 +10,8 @@ public class PauseManager : MonoBehaviour
     public Slider volumeSlider;
     public Slider sensSlider;
     public Toggle fullscreenToggle;
+    public Button playMenuButton;
+    public Button backMenuButton;
 
     private PlayerControls playerControls;
     private bool isPaused = false;
@@ -37,6 +39,11 @@ public class PauseManager : MonoBehaviour
             sensSlider.onValueChanged.AddListener(SetSensitivity);
         if (fullscreenToggle != null)
             fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
+        if (playMenuButton != null)
+            playMenuButton.onClick.AddListener(ResumeGame);
+        if (backMenuButton != null)
+            backMenuButton.onClick.AddListener(BackToMenu);
+
 
         pauseAction = new InputAction(type: InputActionType.Button, binding: "<Keyboard>/escape");
         pauseAction.performed += ctx => TogglePause();
@@ -82,8 +89,12 @@ public class PauseManager : MonoBehaviour
 
     public void SetSensitivity(float value)
     {
-        playerControls.Sensitivity = value;
-        PlayerPrefs.SetFloat("Sensitivity", value);
+        Debug.Log("SetSensitivity çağrıldı: " + value + " | playerControls: " + playerControls);
+        if (playerControls != null)
+        {
+            playerControls.Sensitivity = value;
+            PlayerPrefs.SetFloat("Sensitivity", value);
+        }
     }
 
     public void SetFullscreen(bool isFullscreen)
