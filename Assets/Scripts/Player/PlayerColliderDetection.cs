@@ -80,6 +80,7 @@ namespace Player
             {
                 carMovement.CarMovementStart();
                 other.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);
             }
 
         }

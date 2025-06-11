@@ -9,10 +9,13 @@ public class MainMenu : MonoBehaviour
     public Button playButton;
     public Button quitButton;
     public Button creditButton;
+    public Button offcredButton;
     public Button githubButton;
     public Button itchioButton;
 
+
     [Header("Backgrounds")]
+    public GameObject creditPanel;
     public RawImage backgroundImage;
     public Texture[] backgrounds;
     public float fadeDuration = 1.5f;
@@ -26,8 +29,8 @@ public class MainMenu : MonoBehaviour
         quitButton.onClick.AddListener(OnQuit);
         githubButton.onClick.AddListener(OnGithub);
         itchioButton.onClick.AddListener(OnItchio);
-        if (creditButton != null)
-            creditButton.onClick.AddListener(OnCredit);
+        creditButton.onClick.AddListener(OnCredit);
+        offcredButton.onClick.AddListener(OffCredit);
 
 
         if (backgrounds.Length > 0)
@@ -52,7 +55,12 @@ public class MainMenu : MonoBehaviour
 
     void OnCredit()
     {
-        // Kredi paneli açılacaksa burada aktif et
+        creditPanel.SetActive(true);
+    }
+
+    void OffCredit()
+    {
+        creditPanel.SetActive(false);
     }
 
     void OnGithub()

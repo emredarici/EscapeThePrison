@@ -285,9 +285,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playButton: {fileID: 1855118374}
   quitButton: {fileID: 1583323279}
-  creditButton: {fileID: 0}
+  creditButton: {fileID: 1969137692}
+  offcredButton: {fileID: 1067347940}
   githubButton: {fileID: 1737485178}
   itchioButton: {fileID: 1615569271}
+  creditPanel: {fileID: 243444595}
   backgroundImage: {fileID: 1843318545}
   backgrounds:
   - {fileID: 2800000, guid: 8e40be8ca9831024c9fd99529ca9dd34, type: 3}
