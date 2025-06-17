@@ -1,6 +1,9 @@
 # 🚔 Escape The Prison  
 🔗 [**Play on Itch.io**](https://yrkn.itch.io/etp)  
+
 🎮 Unity Version: **2022.3.13f1**
+
+🏢 Developed by the **Gizmo** team
 
 **Escape The Prison** combines charming low-poly visuals with a tense prison atmosphere, delivering a unique and exciting adventure!  
 Get ready to **outsmart the guards**, **blend in with inmates**, and **plot your great escape** through a rich variety of game mechanics.
@@ -12,6 +15,8 @@ Get ready to **outsmart the guards**, **blend in with inmates**, and **plot your
 - 👨‍💻 **Game Developer:** Emre Darıcı  
 - 🎮 **Game Designer:** Yarkın Gökçel  
 - 🎨 **3D Artist:** Buğra Han Balcı  
+
+<img style="max-width:100%; border-radius: 12px; margin: 20px 0;" alt="Game Image" src="https://img.itch.zone/aW1nLzIxNjM1MDQwLnBuZw==/original/pPikEt.png">
 
 ---
 
