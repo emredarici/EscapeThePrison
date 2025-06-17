@@ -11,7 +11,7 @@ Get ready to **outsmart the guards**, **blend in with inmates**, and **plot your
 
 - 👨‍💻 **Game Developer:** Emre Darıcı  
 - 🎮 **Game Designer:** Yarkın Gökçel  
-- 🧑‍🎨 **3D Artist:** Buğra Han Balcı  
+- 🎨 **3D Artist:** Buğra Han Balcı  
 
 ---
 
