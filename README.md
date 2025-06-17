@@ -2,6 +2,7 @@ Unity Versiyon 2022.3.13f1
 
 # EscapeThePrison
 [GDD.docx](https://github.com/user-attachments/files/20771218/GDD.docx)
+itchio: https://yrkn.itch.io/etp
 
 EscapeThePrison combines charming graphics with a prison theme to take players on an exciting adventure! Experience the unique atmosphere of the prison and the thrill of escaping with diverse game mechanics.
 
