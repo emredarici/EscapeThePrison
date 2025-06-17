@@ -65,13 +65,13 @@ public class MainMenu : MonoBehaviour
 
     void OnGithub()
     {
-        Application.OpenURL("https://google.com");
+        Application.OpenURL("https://github.com/emredarici/EscapeThePrison");
     }
 
     void OnItchio()
     {
         Debug.Log("Itchio button clicked");
-        Application.OpenURL("https://google.com");
+        Application.OpenURL("https://yrkn.itch.io/etp");
     }
 
     IEnumerator BackgroundFadeLoop()
