@@ -1,35 +1,74 @@
-Unity Versiyon 2022.3.13f1
+# 🚔 Escape The Prison  
+🔗 [**Play on Itch.io**](https://yrkn.itch.io/etp)  
+🎮 Unity Version: **2022.3.13f1**
 
-# EscapeThePrison
-[GDD.docx](https://github.com/user-attachments/files/20771218/GDD.docx)
-itchio: https://yrkn.itch.io/etp
-
-EscapeThePrison combines charming graphics with a prison theme to take players on an exciting adventure! Experience the unique atmosphere of the prison and the thrill of escaping with diverse game mechanics.
-
-## Team
-
-- **Game Developer:** Emre Darıcı  
-- **Game Designer:** Yarkın Gökçel  
-- **3D Artist:** Buğra Han Balcı  
-
-## Game Mechanics & Features
-
-- **New Input System:** Modern and flexible player control system.
-- **Cinemachine FreeLook Camera:** Smooth, cinematic third-person camera movements.
-- **NavMesh for NPCs:** NPCs navigate the environment naturally using Unity’s NavMesh.
-- **State Machine for NPC Behaviors:** NPCs have different behavioral states, especially in their dorms, managed by a state machine.
-- **Prison Regime with 4 States:**
-  - **HeadCount:** NPCs and the player line up one by one, guided by visual effects. After everyone lines up, a guard performs the headcount.
-  - **ChowTime:** NPCs go to the cafeteria in an orderly fashion and line up for food.
-  - **RecTime:** Free time for NPCs to wander around and interact freely.
-  - **BedTime:** Everyone returns to their beds, and the doors close for the night.
-- **Dialogue System:** Talk and interact with NPCs through a coded dialogue system.
-- **Unique Characters:** Meet eccentric characters who introduce you to the quirky world of the prison.
-- **Two Minigames:** Enjoy a variety of gameplay with two coded minigames.
-- **Guard Detection System:** Beware of guards who can catch you if you’re not careful!
-- **Alarm System:** Trigger alarms during escape attempts for heightened tension.
-- **Special Escape Scene:** Succeed in escaping and unlock a unique ending scene.
+**Escape The Prison** combines charming low-poly visuals with a tense prison atmosphere, delivering a unique and exciting adventure!  
+Get ready to **outsmart the guards**, **blend in with inmates**, and **plot your great escape** through a rich variety of game mechanics.
 
 ---
 
-Don’t forget to star this repository to stay updated on the latest news and development progress!
+## 👥 Team
+
+- 👨‍💻 **Game Developer:** Emre Darıcı  
+- 🎮 **Game Designer:** Yarkın Gökçel  
+- 🧑‍🎨 **3D Artist:** Buğra Han Balcı  
+
+---
+
+## 🛠️ Game Mechanics & Features
+
+- 🕹️ **New Input System**  
+  Modern and flexible player control system for smooth gameplay.
+
+- 🎥 **Cinemachine FreeLook Camera**  
+  Cinematic third-person camera with responsive, smooth movement.
+
+- 🧭 **NavMesh for NPCs**  
+  NPCs walk and behave naturally using Unity’s NavMesh pathfinding.
+
+- 🤖 **State Machine for NPC Behaviors**  
+  NPCs have dynamic behaviors, especially in their dorms, governed by a custom state machine.
+
+---
+
+## ⏱️ Prison Regime – 4 Daily States
+
+1. 🧍‍♂️ **HeadCount**  
+   NPCs and the player line up one by one using visual guides. A guard then performs the count.
+
+2. 🍽️ **ChowTime**  
+   Everyone walks to the cafeteria and lines up to get food.
+
+3. 🏃 **RecTime**  
+   Free roaming and interactions with other inmates.
+
+4. 🛏️ **BedTime**  
+   All return to their beds, and the prison doors lock for the night.
+
+---
+
+## 💬 Systems & Gameplay
+
+- 💬 **Dialogue System**  
+  Interact with quirky inmates using a coded dialogue system.
+
+- 🧑‍🤝‍🧑 **Unique Characters**  
+  Meet eccentric and memorable NPCs in a stylized prison world.
+
+- 🎯 **Two Minigames**  
+  Enjoy gameplay variety with fun and engaging coded minigames.
+
+- 👮 **Guard Detection System**  
+  Stay alert — guards will catch you if you're not careful!
+
+- 🚨 **Alarm System**  
+  Trigger alarms during suspicious activities or escape attempts for added challenge.
+
+- 🔓 **Special Escape Scene**  
+  Successfully escape to witness a unique and rewarding ending!
+
+---
+
+## ⭐ Stay Updated
+
+🌟 Don’t forget to **star** this repository to follow the development journey and get the latest updates!
